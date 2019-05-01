@@ -1,0 +1,33 @@
+{
+  "name": "cosechaexpress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "build": "./node_modules/.bin/babel src --out-dir dist",
+    "babel-node": "babel-node src/index.js",
+    "dev": "nodemon src/index.js",
+    "start": "node dist/"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "consign": "^0.1.6",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "faker": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.7.6",
+    "socket.io": "^2.2.0",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4"
+  }
+}
