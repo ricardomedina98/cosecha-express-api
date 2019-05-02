@@ -1,15 +1,15 @@
+require('colors');
+const http = require('http');
+const socketIO = require('socket.io');
+const app = require('./libs/server');
 
-const express = require('express');
-const consign = require('consign');
-const app = express();
+let server = http.createServer(app);
+server.listen(app.get('port'), ()=> {
+    console.log(`Server on port ${app.get('port')}`.green);
+});  
 
-consign({
-  cwd: __dirname})
-  .include('libs/config.js')
-  .then('database.js')
-  .then('libs/middlewares.js')
-  .then('middlewares')
-  .then('routes')
-  .then('libs/boot.js')
-  .into(app);
-
+let io = socketIO(server);
+console.log(app.database.models);
+io.on('connection', (client) => {
+  console.log('Usuario conectado');
+});

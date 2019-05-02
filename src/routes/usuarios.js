@@ -4,7 +4,7 @@ const faker = require('faker/locale/es_MX');
 module.exports = app => {
     
     const { verificarToken } = app.middlewares.auth;
-    const Usuario = app.middlewares.usuarios;
+    const Usuario = app.controllers.usuarios;
 
     app.route('/usuario')
     .get(verificarToken, Usuario.ObtenerUsuarios )
