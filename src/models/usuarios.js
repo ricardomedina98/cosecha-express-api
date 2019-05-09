@@ -37,6 +37,16 @@ module.exports = (sequelize, DataType) => {
                 notEmpty: true
             }          
         },
+        role: {
+            type: DataType.STRING,
+            allowNull: false,
+            validate: {
+                notNull: {
+                    msg: 'El rol de usuario es necesario'
+                },
+                notEmpty: true
+            }   
+        },
         status: {
             type: DataType.ENUM,
             values: ['A', 'I'],

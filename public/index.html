@@ -9,15 +9,24 @@
 <body>
     <h1>Hola Mundo</h1>
 
-    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 
     <script>
     
     var socket = io();
 
-    //Escuchar
+        //Escuchar
     socket.on('connect', function() {
         console.log('Contectado al servidor');
+    });
+
+    socket.on('disconnect', function(){
+        console.log('Se perdio conexion con el servidor');
+    });
+
+    //Escuchar informacion
+    socket.on('SHOW_PRODUCTS', function(productos){
+        console.log(productos);
     });
     
     </script>

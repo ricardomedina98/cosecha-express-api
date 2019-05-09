@@ -102,8 +102,12 @@ module.exports = (sequelize, DataType) => {
         timestamps: false
     });
 
+
+
+
     
     Productos.associate = (models) => {
+
         Productos.hasMany(models.Mediciones, {
             foreignKey: 'id_medicion',
             sourceKey: 'id_medicion'

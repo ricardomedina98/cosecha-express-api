@@ -18,7 +18,7 @@ module.exports = app => {
             
 
             if(!result){
-                return res.status(404).json({
+                return res.status(401).json({
                     OK: false,
                     msg: 'Usuario o contraseña incorrecto'
                 });

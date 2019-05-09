@@ -1,3 +1,5 @@
+const faker = require('faker/locale/es_MX');
+
 module.exports = app => {
 
     const Producto = app.database.models.Productos;
@@ -18,12 +20,14 @@ module.exports = app => {
                 where: { id_categoria: app.database.Sequelize.col('categoria_productos.id_categoria') },
                 required:false,
                 attributes: ['nombre_categoria']
-            }]            
+            }]
         })
-        .then(result => res.json({
-            OK: true,
-            Productos: result
-        }))
+        .then(result => {            
+            res.json({
+                OK: true,
+                Productos: result
+            })
+        })
         .catch(error => {
             res.status(412).json({
                 msg: error.message
@@ -52,10 +56,12 @@ module.exports = app => {
              include: [Mediciones]
         })
         .then(result => {
+            app.io.emit('SHOW_PRODUCTS', { Productos: result });
             res.json({
                 OK: true,
                 producto: result
             });
+            
         })
         .catch(err => {
             res.json({
@@ -87,6 +93,7 @@ module.exports = app => {
             where : {
                 id_producto: id
             },
+            individualHooks: true,
             fields: ['id_categoria', 'id_medicion', 'nombre_producto', 'existencia', 'existencia_min',
                     'existencia_max', 'precio_semanal', 'precio_diario']
         }).then(result => {

@@ -1,5 +1,4 @@
-const bcrypt = require('bcrypt');
-const faker = require('faker/locale/es_MX');
+
 
 module.exports = app => {
     
@@ -15,7 +14,7 @@ module.exports = app => {
     app.get('/usuario/:id', verificarToken, Usuario.ObtenerUsuarioID);
 
     app.delete('/usuario/:id', verificarToken , Usuario.EliminarUsuario);
-    
+
     app.get('/faker/user/:num', Usuario.GenerarUsuarios);
 
 }

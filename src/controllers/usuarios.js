@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt');
+const faker = require('faker/locale/es_MX');
+
 module.exports = app => {
 
     const Usuario = app.database.models.Usuarios;
@@ -24,11 +27,12 @@ module.exports = app => {
         let usuario = new Usuario({
             nombre_empleado: body.nombre_empleado,
             nombre_usuario: body.nombre_usuario,
-            contrasena: bcrypt.hashSync(body.contrasena, 10)
+            contrasena: bcrypt.hashSync(body.contrasena, 10),
+            role: body.role
         });
 
         Usuario.create(usuario.dataValues, {
-            fields: ['nombre_empleado', 'nombre_usuario', 'contrasena']
+            fields: ['nombre_empleado', 'nombre_usuario', 'contrasena', 'role']
         })
         .then(result => {
             res.json({
@@ -52,6 +56,7 @@ module.exports = app => {
             nombre_empleado: body.nombre_empleado,
             nombre_usuario: body.nombre_usuario,
             contrasena: bcrypt.hashSync(body.contrasena, 10),
+            role: body.role,
             status: 'A'
         });
 
@@ -59,7 +64,7 @@ module.exports = app => {
             where: {
                 id_usuario: id
             },
-            fields: ['nombre_empleado', 'nombre_usuario', 'contrasena', 'status']
+            fields: ['nombre_empleado', 'nombre_usuario', 'contrasena', 'role', 'status']
         }).then(result => {
             res.json({
                 OK: true,
@@ -126,9 +131,10 @@ module.exports = app => {
             await Usuario.create({
                 nombre_empleado: faker.name.findName(),
                 nombre_usuario: faker.internet.userName(),
-                contrasena: bcrypt.hashSync('12345', 10)
+                contrasena: bcrypt.hashSync('12345', 10),
+                role: 'admin'
             }, {
-                fields: ['nombre_empleado', 'nombre_usuario', 'contrasena']
+                fields: ['nombre_empleado', 'nombre_usuario', 'contrasena', 'role']
             });
         }
 

@@ -11,13 +11,32 @@ module.exports = app => {
             if(err){
                 return res.status(401).json({
                     OK: false,
-                    msg: 'Invalid Token'
+                    msg: 'Token no valido'
                 });
-            }        
+            }    
+            
+            req.usuario = decode.usuario;
     
             next();
     
         })
+    }
+
+    app.verificarAdmin_Role = (req, res, next) => {        
+        
+        
+        if(req.usuario.role !== 'admin'){
+            return res.status(401).json({
+                OK: true,
+                err:{
+                    message: 'Usuario no autorizado'
+                }
+            });
+        }  
+            
+        
+        next();
+    
     }
 
     return app;
