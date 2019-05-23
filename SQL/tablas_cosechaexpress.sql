@@ -1,5 +1,3 @@
-drop database cosechaexpress;
-create database cosechaexpress;
 use cosechaexpress;
 
 
@@ -20,7 +18,6 @@ create table usuarios(
 );
 
 
-
 create table categorias_productos(
   id_categoria int auto_increment,
   nombre_categoria varchar(50) NOT NULL,
@@ -28,11 +25,13 @@ create table categorias_productos(
   CONSTRAINT un_categoria unique(nombre_categoria)  
 );
 
+
 CREATE TABLE mediciones(
   id_medicion int AUTO_INCREMENT,
   tipo_medicion varchar(45) NOT NULL,
   CONSTRAINT pk_id_medicion PRIMARY KEY(id_medicion)
 );
+
 
 create table productos(
   id_producto int auto_increment,
@@ -56,7 +55,7 @@ create table productos(
   CONSTRAINT chk_status_productos CHECK(status in ('A', 'I'))
 );
 
-SELECT * FROM productos p;
+
 
 CREATE TABLE adm_transacciones_log(
   id_transaccion int NOT NULL,
@@ -67,6 +66,8 @@ CREATE TABLE adm_transacciones_log(
   fecha_creacion date,
   CONSTRAINT pk_id_transaccion PRIMARY KEY(id_transaccion)
 );
+
+
 
 /* ACTORES */
 
@@ -90,6 +91,7 @@ create table clientes(
   CONSTRAINT chk_status_clientes CHECK(status in ('A', 'I'))
 );
 
+
 create table proveedores(
   id_proveedor int auto_increment,
   nombre_proveedor varchar(50) not null,
@@ -112,6 +114,7 @@ create table proveedores(
   CONSTRAINT chk_status_proveedores CHECK(status in ('A', 'I'))
 );
 
+
 /* COMPRAS */
 
 CREATE TABLE compras(
@@ -128,6 +131,7 @@ CREATE TABLE compras(
   CONSTRAINT fk_id_proveedor_compras FOREIGN KEY(id_proveedor) REFERENCES proveedores(id_proveedor)
 );
 
+
 CREATE TABLE compra_proveedor_productos(
   id_compra int NOT NULL,  
   cantidad_compra float(10,4) NOT NULL,
@@ -137,33 +141,11 @@ CREATE TABLE compra_proveedor_productos(
 );
 
 
-/* VENTAS */
-
-CREATE TABLE ventas(
-  id_venta int AUTO_INCREMENT,
-  cantidad_venta float(10, 4) NOT NULL,
-  precio_total float(10, 4) NOT NULL,
-  fecha_venta datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  id_cliente int NULL,
-  fecha_creacion date not null,
-  creado_por varchar(30) not null,
-  fecha_ultima_modificacion date,
-  fecha_modificacion_por varchar(30),
-  CONSTRAINT
-
-);
-
-CREATE TABLE ventas_productos(
-  id_venta_producto int AUTO_INCREMENT,
-  id_producto
-);
-
-
 /*DEVOLUCIONES*/
 CREATE TABLE devoluciones_compras(
   id_devolucion int AUTO_INCREMENT,
   fecha_devolucion datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,  
-  precio_total_devolcucion int NOT NULL,
+  precio_total_devolucion int NOT NULL,
   id_compra int NOT NULL,
   fecha_creacion date not null,
   creado_por varchar(30) not null,
@@ -182,6 +164,8 @@ CREATE TABLE devolucion_compra_productos(
   CONSTRAINT fk_id_producto_dev_productos FOREIGN KEY(id_producto) REFERENCES productos(id_producto)
 );
 
+
+
 /*SALIDAS*/
 
 CREATE TABLE merma(
@@ -194,59 +178,37 @@ CREATE TABLE merma(
   CONSTRAINT fk_id_producto_merma FOREIGN KEY(id_producto) REFERENCES productos(id_producto)
 );
 
-INSERT INTO mediciones (id_medicion, tipo_medicion)
-  VALUES (1, 'KG');
-
-INSERT INTO mediciones (id_medicion, tipo_medicion)
-  VALUES (2, 'MJO');
-
-INSERT INTO mediciones (id_medicion, tipo_medicion)
-  VALUES (3, 'CHAROLA');
-
-INSERT INTO mediciones (id_medicion, tipo_medicion)
-  VALUES (4, 'BOTE');
-
-INSERT INTO mediciones (id_medicion, tipo_medicion)
-  VALUES (5, 'CAJA');
 
 
+/*                          PENDIENTES                                */
+CREATE TABLE ventas(
+  id_venta int AUTO_INCREMENT,
+  cantidad_venta float(10, 4) NOT NULL,
+  precio_total float(10, 4) NOT NULL,
+  fecha_venta datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  id_cliente int NULL,
+  fecha_creacion date not null,
+  creado_por varchar(30) not null,
+  fecha_ultima_modificacion date,
+  fecha_modificacion_por varchar(30),
+  CONSTRAINT pk_id_venta PRIMARY KEY(id_venta)
+);
 
-INSERT INTO categorias_productos (id_categoria, nombre_categoria)
-  VALUES (1, 'Aguacate');
-
-INSERT INTO productos(id_producto, nombre_producto, id_categoria, id_medicion, existencia, existencia_min, existencia_max, precio_semanal)
-  VALUES (1, 'Aguacate Extra' , 1, 1, 100, 10, 110, 235.00);
-
-INSERT INTO productos(id_producto, nombre_producto, id_categoria, id_medicion, existencia, existencia_min, existencia_max, precio_semanal)
-  VALUES (2, 'Aguacate Tercera' , 1, 1, 200, 50, 500, 170.00);
-
-SELECT p.nombre_producto FROM productos p INNER JOIN categorias_productos cp ON p.id_categoria = cp.id_categoria WHERE cp.id_categoria = 1;
-
-SELECT * FROM categorias_productos cp;
-
-SELECT * FROM productos p;
-
-
-INSERT INTO usuarios (id_usuario, nombre_empleado, nombre_usuario, contrasena, tipo_usuario, fecha_creacion, creado_por, fecha_ultima_modificacion, fecha_modificacion_por)
-  VALUES (1, 'Jose Ricardo Medina', 'ricardo_medina', AES_ENCRYPT('ricardo', 'cosechaexpress2019'), 'Administrador', CURDATE(), '', CURDATE(), 'Yo');
-
-
-SELECT AES_DECRYPT(u.contrasena, 'cosechaexpress2019') FROM usuarios u;
-SELECT u.contrasena FROM usuarios u;
+CREATE TABLE ventas_productos(
+  id_venta_producto int AUTO_INCREMENT,
+  id_producto int NOT NULL,
+  cantidad_venta float(10,4),
+  CONSTRAINT pk_id_venta_producto PRIMARY KEY(id_venta_producto)
+);
 
 
+CREATE TABLE producto_cliente_p_especial(
+  id_p_especial int AUTO_INCREMENT,
+  id_cliente int NOT NULL,
+  id_venta int NOT NULL,
+  id_producto int NOT NULL,
+  CONSTRAINT pk_p_especial PRIMARY KEY(id_p_especial)
+);
 
 
-
-SELECT u.* FROM usuarios u WHERE u.nombre_usuario = 'ricardo_medina04' AND u.contrasena = '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2';
-
-/*SOLO USO PARA DEMOSTRACION PHP*/
-SELECT * FROM usuarios u;
-INSERT INTO usuarios (nombre_empleado, nombre_usuario, contrasena, role)
-  VALUES ('Mundo Garza', 'mundo_garza', '$2a$07$asxx54ahjppf45sd87a5auRajNP0zeqOkB9Qda.dSiTb2/n.wAC/2', 'admin');
-
-INSERT INTO categorias_productos (id_categoria, nombre_categoria)
-  VALUES (1, 'Aguacate');
-
-SELECT * FROM productos p;
 
