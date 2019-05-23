@@ -27,15 +27,8 @@ module.exports = (sequelize, DataType) => {
             }         
         },        
         contrasena: {
-            type: DataType.TEXT,
-            unique: true,            
-            allowNull: false,
-            validate: {
-                notNull: {
-                    msg: 'La contraseña es necesaria'
-                },
-                notEmpty: true
-            }          
+            type: DataType.TEXT,                  
+            allowNull: true        
         },
         role: {
             type: DataType.STRING,
@@ -77,7 +70,7 @@ module.exports = (sequelize, DataType) => {
         },
         scopes: {
             withPassword: {
-                attributes: { },
+                attributes: { exclude: ['fecha_creacion', 'creado_por', 'fecha_ultima_modificacion', 'fecha_modificacion_por', 'status'] },
             }
         },
         timestamps: false

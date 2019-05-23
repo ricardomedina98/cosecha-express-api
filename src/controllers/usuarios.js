@@ -35,6 +35,7 @@ module.exports = app => {
             fields: ['nombre_empleado', 'nombre_usuario', 'contrasena', 'role']
         })
         .then(result => {
+            delete result.dataValues.contrasena;
             res.json({
                 OK: true,
                 usuario: result
@@ -50,7 +51,7 @@ module.exports = app => {
 
     app.ActualizarUsuario = (req, res) => {
         let id = req.params.id;
-        let body = req.body;
+        let body = req.body;        
 
         let usuario = new Usuario({
             nombre_empleado: body.nombre_empleado,
@@ -58,7 +59,7 @@ module.exports = app => {
             contrasena: bcrypt.hashSync(body.contrasena, 10),
             role: body.role,
             status: 'A'
-        });
+        });        
 
         Usuario.update(usuario.dataValues, {
             where: {
@@ -66,8 +67,53 @@ module.exports = app => {
             },
             fields: ['nombre_empleado', 'nombre_usuario', 'contrasena', 'role', 'status']
         }).then(result => {
+            delete usuario.dataValues.contrasena;
             res.json({
                 OK: true,
+                usuario,
+                rows_affected: result[0]
+            });
+        }).catch(err => {
+            res.status(412).json({
+                OK: false,
+                msg: err.message
+            });
+        });
+    }
+
+    app.ActualizarUsuarioPerfil = (req, res) => {
+        let id = req.params.id;
+        let body = req.body;  
+        
+        let field = ['nombre_empleado', 'nombre_usuario'];
+
+        let usuario = new Usuario({
+            nombre_empleado: body.nombre_empleado,
+            nombre_usuario: body.nombre_usuario            
+        });        
+
+        if(body.contrasena){
+            usuario = new Usuario({
+                nombre_empleado: body.nombre_empleado,
+                nombre_usuario: body.nombre_usuario,
+                contrasena: bcrypt.hashSync(body.contrasena, 10)         
+            }); 
+            field = ['nombre_empleado', 'nombre_usuario', 'contrasena']
+        }
+
+        console.log(usuario.dataValues);
+        console.log(field);
+
+        Usuario.update(usuario.dataValues, {
+            where: {
+                id_usuario: id
+            },
+            fields: field
+        }).then(result => {
+            delete usuario.dataValues.contrasena;
+            res.json({
+                OK: true,
+                usuario,
                 rows_affected: result[0]
             });
         }).catch(err => {
@@ -113,7 +159,7 @@ module.exports = app => {
         }).then(result => {
             res.json({
                 OK: true,
-                result
+                rows_affected: result[0]
             });
         }).catch(err => {
             res.status(412).json({

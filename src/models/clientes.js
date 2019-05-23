@@ -88,12 +88,11 @@ module.exports = (sequelize, DataType)=> {
             allowNull: true    
         }
     }, {
-        tableName: 'productos',        
+        tableName: 'clientes',        
         createdAt: 'fecha_creacion',
         updatedAt: 'fecha_ultima_modificacion',
         timestamps: false
     });
-
 
     return Clientes;
 }

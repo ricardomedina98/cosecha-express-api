@@ -2,12 +2,14 @@
 
 module.exports = app => {
     
-    const { verificarToken } = app.middlewares.auth;
+    const { verificarToken, verificarAdmin_Role } = app.middlewares.auth;
     const Usuario = app.controllers.usuarios;
 
-    app.route('/usuario')
-    .get(verificarToken, Usuario.ObtenerUsuarios )
-    .post(verificarToken, Usuario.CrearUsuario);
+    app.get('/usuario', [verificarToken, verificarAdmin_Role], Usuario.ObtenerUsuarios );
+
+    app.post('/usuario', verificarToken, Usuario.CrearUsuario);
+
+    app.put('/usuarioperfil/:id', verificarToken, Usuario.ActualizarUsuarioPerfil);
 
     app.put('/usuario/:id', verificarToken, Usuario.ActualizarUsuario);
 

@@ -5,6 +5,7 @@ module.exports = app => {
 
    app.verificarToken = (req, res, next) => {
         let token = req.cookies.token || req.get('token');
+        
     
         jwt.verify(token, app.libs.config.SEED_TOKEN, (err, decode) => {
     
@@ -14,6 +15,8 @@ module.exports = app => {
                     msg: 'Token no valido'
                 });
             }    
+
+            console.log('TOKEN VALIDADO');
             
             req.usuario = decode.usuario;
     

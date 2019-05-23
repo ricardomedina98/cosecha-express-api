@@ -64,13 +64,11 @@ module.exports = app => {
             
         })
         .catch(err => {
-            res.json({
+            res.status(412).json({
                 OK: false,
                 msg: err
             });
-        });
-
-        console.log(producto.dataValues);
+        });        
     }
 
     app.ActualizarProducto = (req, res) => {
@@ -89,13 +87,73 @@ module.exports = app => {
             precio_diario: body.precio_diario
         });
 
-        Producto.update(producto.dataValues, {
+        Producto.update(producto.dataValues, {            
             where : {
                 id_producto: id
             },
-            individualHooks: true,
+            individualHooks: true,            
             fields: ['id_categoria', 'id_medicion', 'nombre_producto', 'existencia', 'existencia_min',
                     'existencia_max', 'precio_semanal', 'precio_diario']
+        }).then(result => {            
+            res.json({
+                OK: true,
+                producto: producto.dataValues
+            });
+        }).catch(err => {
+            console.log(err);
+            res.status(412).json({
+                OK: false,
+                msg: err
+            });
+        });
+
+    }
+
+    app.ConsultarProductoID = (req, res) => {
+        let id = req.params.id;        
+
+        Producto.findByPk(id, { 
+            where: {
+                status: 'A'
+            },
+            include: [{
+                model: Mediciones,
+                where: { id_medicion: app.database.Sequelize.col('mediciones.id_medicion') },
+                attributes: ['tipo_medicion']
+            }, {
+                model: Cat_Prod,
+                where: { id_categoria: app.database.Sequelize.col('categoria_productos.id_categoria') },
+                required:false,
+                attributes: ['nombre_categoria']
+            }]
+        })
+        .then(producto => {
+            res.json({
+                OK: true,
+                producto
+            });
+        })
+        .catch(err => {
+            res.json({
+                OK: false,
+                msg: err
+            });
+        });
+    }
+
+    app.EliminarProducto = (req, res) => {
+        let id = req.params.id;
+
+        let producto = new Producto({
+            status: 'I'
+        });
+
+        Producto.update(producto.dataValues, {
+            where: {
+                id_producto: id
+            },
+            individualHooks: true,
+            fields: ['status']
         }).then(result => {
             res.json({
                 OK: true,
@@ -107,7 +165,6 @@ module.exports = app => {
                 msg: err
             });
         });
-
     }
 
     app.GenerarProductos = async(req, res) => {
@@ -131,6 +188,14 @@ module.exports = app => {
                 fields: ['id_categoria', 'id_medicion', 'nombre_producto',
                  'existencia', 'existencia_min', 'existencia_max', 'precio_semanal', 'precio_diario']
             })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+            
             
         }
 

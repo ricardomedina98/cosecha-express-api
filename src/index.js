@@ -1,6 +1,7 @@
 require('colors');
 
 const express = require('express');
+const cors = require('cors')
 const app = express();
 
 const consign = require('consign');
@@ -14,6 +15,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cookieParser());
 app.io = socketIO;
+app.use(cors());
+
 
 consign({
 cwd: 'src'})

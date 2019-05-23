@@ -3,8 +3,7 @@ module.exports = app => {
     const Productos = app.database.models.Productos;  
     const Models = app.database.models;
 
-    const findAllProductos = () => {
-        console.log();
+    const findAllProductos = () => {        
         Productos.findAll({ 
             where: {
                 status: 'A'

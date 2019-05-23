@@ -6,9 +6,9 @@ module.exports = app => {
 
     const Usuario = app.database.models.Usuarios;
 
-    app.get('/iniciar_sesion', (req, res) => {
+    app.post('/iniciar_sesion', (req, res) => {
 
-        let body = req.body;
+        let body = req.body;                
 
         Usuario.scope('withPassword').findOne({
             where: {
@@ -17,15 +17,8 @@ module.exports = app => {
         }).then(result => {            
             
 
-            if(!result){
-                return res.status(401).json({
-                    OK: false,
-                    msg: 'Usuario o contraseña incorrecto'
-                });
-            }
-
-            if(!bcrypt.compareSync(body.contrasena, result.dataValues.contrasena)){
-                return res.status(401).json({
+            if(!result || !bcrypt.compareSync(body.contrasena, result.dataValues.contrasena)){
+                return res.status(400).json({
                     OK: false,
                     msg: 'Usuario o contraseña incorrecto'
                 });
