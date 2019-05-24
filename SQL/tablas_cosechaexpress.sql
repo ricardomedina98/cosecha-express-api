@@ -114,7 +114,7 @@ create table proveedores(
   CONSTRAINT chk_status_proveedores CHECK(status in ('A', 'I'))
 );
 
-
+/*                      ENTRADAS                      */
 /* COMPRAS */
 
 CREATE TABLE compras(

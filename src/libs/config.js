@@ -4,8 +4,8 @@ module.exports = {
     password: 'hugo1010',    
     options:{        
         host: '127.0.0.1',
-        dialect: 'mariadb',
-        port: '3308',
+        dialect: 'mysql',
+        port: '3306',
         dialectOptions: {
             dateStrings: true,
             typeCast: true

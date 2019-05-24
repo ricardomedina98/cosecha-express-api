@@ -5,6 +5,26 @@ select * from usuarios;
 select * from productos;
 select * from categorias_productos;
 select * from mediciones;
+select * from clientes;
+select * from proveedores;
+select * from compras;
+
+
+select * from adm_transacciones_log;
+select * from compra_proveedor_productos;
+select * from devoluciones_compras;
+select * from devolucion_compra_productos;
+
+
+
+
+
+update usuarios set nombre_empleado = 'Hugo Guerrero', nombre_usuario = 'guerrero01' where id_usuario = 2;
+
+
+update productos set nombre_producto = 'Mobil super Acite' where id_producto = 59;
+
+
 
 
 INSERT INTO mediciones (id_medicion, tipo_medicion)
@@ -35,9 +55,7 @@ INSERT INTO productos(id_producto, nombre_producto, id_categoria, id_medicion, e
 
 SELECT p.nombre_producto FROM productos p INNER JOIN categorias_productos cp ON p.id_categoria = cp.id_categoria WHERE cp.id_categoria = 1;
 
-SELECT * FROM categorias_productos cp;
 
-SELECT * FROM productos p;
 
 
 INSERT INTO usuarios (id_usuario, nombre_empleado, nombre_usuario, contrasena, tipo_usuario, fecha_creacion, creado_por, fecha_ultima_modificacion, fecha_modificacion_por)
@@ -58,6 +76,3 @@ INSERT INTO usuarios (nombre_empleado, nombre_usuario, contrasena, role)
 
 INSERT INTO categorias_productos (id_categoria, nombre_categoria)
   VALUES (1, 'Aguacate');
-
-SELECT * FROM productos p;
-
