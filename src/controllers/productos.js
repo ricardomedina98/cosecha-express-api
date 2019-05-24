@@ -2,9 +2,9 @@ const faker = require('faker/locale/es_MX');
 
 module.exports = app => {
 
-    const Producto = app.database.models.Productos;
-    const Mediciones = app.database.models.Mediciones;
-    const Cat_Prod = app.database.models.Categoria_productos;    
+    const Producto = app.database.models.productos;
+    const Mediciones = app.database.models.mediciones;
+    const Cat_Prod = app.database.models.categoria_productos;    
 
     app.ObtenerProductos = (req, res) => {
         Producto.findAll({ 

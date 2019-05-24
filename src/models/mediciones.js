@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataType) => {
-    const Mediciones = sequelize.define('Mediciones',{
+    const Mediciones = sequelize.define('mediciones',{
         id_medicion:{
             type: DataType.INTEGER,
             primaryKey: true,
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataType) => {
 
     
     Mediciones.associate = (models) => {
-        Mediciones.belongsTo(models.Productos, {
+        Mediciones.belongsTo(models.productos, {
             foreignKey: 'id_medicion',
             targetKey: 'id_medicion'
         });

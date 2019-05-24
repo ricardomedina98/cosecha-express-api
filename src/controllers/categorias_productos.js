@@ -1,7 +1,7 @@
 module.exports = app => {
 
-    const Cat_Prod = app.database.models.Categoria_productos;
-    const Producto = app.database.models.Productos;
+    const Cat_Prod = app.database.models.categoria_productos;
+    const Producto = app.database.models.productos;
 
     app.ConsultarCategorias = (req, res) => {
 

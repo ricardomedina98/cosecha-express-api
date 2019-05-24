@@ -3,7 +3,7 @@ const faker = require('faker/locale/es_MX');
 
 module.exports = app => {
 
-    const Usuario = app.database.models.Usuarios;
+    const Usuario = app.database.models.usuarios;
 
     app.ObtenerUsuarios = (req, res) => {
 

@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, DataType) => {
-    const Usuarios = sequelize.define('Usuarios', {
+    const Usuarios = sequelize.define('usuarios', {
         id_usuario:{
             type: DataType.INTEGER,
             primaryKey: true,
@@ -62,7 +62,7 @@ module.exports = (sequelize, DataType) => {
             allowNull: true    
         }
     },{
-        tableName: 'Usuarios',
+        tableName: 'usuarios',
         createdAt: 'fecha_creacion',
         updatedAt: 'fecha_ultima_modificacion',
         defaultScope: {
