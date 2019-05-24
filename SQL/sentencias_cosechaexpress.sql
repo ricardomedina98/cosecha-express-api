@@ -1,5 +1,5 @@
 use cosechaexpress;
-create database cosechaexpress;
+
 
 select * from usuarios;
 select * from productos;
@@ -9,6 +9,8 @@ select * from clientes;
 select * from proveedores;
 select * from compras;
 
+select * from notificaciones;
+
 
 select * from adm_transacciones_log;
 select * from compra_proveedor_productos;
@@ -16,13 +18,39 @@ select * from devoluciones_compras;
 select * from devolucion_compra_productos;
 
 
+select * from productos_lista_precios;
+
 
 
 
 update usuarios set nombre_empleado = 'Hugo Guerrero', nombre_usuario = 'guerrero01' where id_usuario = 2;
 
+update productos set nombre_producto = 'Kilo de papa' where id_producto = 59;
 
-update productos set nombre_producto = 'Mobil super Acite' where id_producto = 59;
+
+
+insert productos_lista_precios(id_producto, precio_semanal, precio_diario, fecha_i_semana, fecha_f_semana) 
+values(341, 203.43, 255.65,  
+last_monday(),
+next_sunday());
+
+
+
+/*Lista de precios de  la semana actual*/
+select p.id_producto, p.nombre_producto, p.existencia, p.existencia_min, p.existencia_max, 
+(select lp.precio_semanal where lp.fecha_i_semana >= last_monday() and lp.fecha_f_semana <= next_sunday()) as precio_semanal, 
+(select lp.precio_diario where lp.fecha_i_semana >= last_monday() and lp.fecha_f_semana <= next_sunday()) as precio_diario
+from productos p
+left join productos_lista_precios lp on lp.id_producto = p.id_producto where p.status = 'A' order by id_producto;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -76,3 +104,15 @@ INSERT INTO usuarios (nombre_empleado, nombre_usuario, contrasena, role)
 
 INSERT INTO categorias_productos (id_categoria, nombre_categoria)
   VALUES (1, 'Aguacate');
+
+
+
+insert into notificaciones (titulo, descripcion) values('Producto entrada', '2 toneladas de tomate');
+insert into notificaciones (titulo, descripcion) values('Producto merma', '3 kilos de papa');
+
+
+
+
+SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) last_monday;
+
+SELECT curdate() + INTERVAL 6 - weekday(curdate()) DAY next_sunday;

@@ -1,6 +1,6 @@
 module.exports = app => {
 
-    const Productos = app.database.models.productos;  
+    const Productos = app.database.models.Productos;  
     const Models = app.database.models;
 
     const findAllProductos = () => {        
@@ -10,11 +10,9 @@ module.exports = app => {
             },
             include: [{
                 model: Models.Mediciones,
-                where: { id_medicion: app.database.Sequelize.col('mediciones.id_medicion') },
                 attributes: ['tipo_medicion']
             }, {
                 model: Models.Categoria_productos,
-                where: { id_categoria: app.database.Sequelize.col('categoria_productos.id_categoria') },
                 required:false,
                 attributes: ['nombre_categoria']
             }]

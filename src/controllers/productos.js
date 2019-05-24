@@ -2,9 +2,9 @@ const faker = require('faker/locale/es_MX');
 
 module.exports = app => {
 
-    const Producto = app.database.models.productos;
-    const Mediciones = app.database.models.mediciones;
-    const Cat_Prod = app.database.models.categoria_productos;    
+    const Producto = app.database.models.Productos;
+    const Mediciones = app.database.models.Mediciones;
+    const Cat_Prod = app.database.models.Categoria_productos;    
 
     app.ObtenerProductos = (req, res) => {
         Producto.findAll({ 
@@ -13,11 +13,9 @@ module.exports = app => {
             },
             include: [{
                 model: Mediciones,
-                where: { id_medicion: app.database.Sequelize.col('mediciones.id_medicion') },
                 attributes: ['tipo_medicion']
             }, {
                 model: Cat_Prod,
-                where: { id_categoria: app.database.Sequelize.col('categoria_productos.id_categoria') },
                 required:false,
                 attributes: ['nombre_categoria']
             }]
@@ -179,17 +177,15 @@ module.exports = app => {
                 nombre_producto: faker.commerce.productName(),
                 existencia: faker.finance.amount(),
                 existencia_min: faker.finance.amount(),
-                existencia_max: faker.finance.amount(),
-                precio_semanal: faker.finance.amount(),
-                precio_diario: faker.finance.amount()
+                existencia_max: faker.finance.amount()
             });
 
             await Producto.create(producto.dataValues, {
                 fields: ['id_categoria', 'id_medicion', 'nombre_producto',
-                 'existencia', 'existencia_min', 'existencia_max', 'precio_semanal', 'precio_diario']
+                 'existencia', 'existencia_min', 'existencia_max']
             })
             .then(result => {
-                console.log(result);
+                //console.log(result);
             })
             .catch(err => {
                 console.log(err);

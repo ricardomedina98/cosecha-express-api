@@ -41,8 +41,6 @@ create table productos(
   existencia float(10,6) NOT NULL,
   existencia_min float(10, 6) NOT NULL,
   existencia_max float(10, 6) NOT NULL,
-  precio_semanal float(10,4) NOT NULL,
-  precio_diario float(10,4) NULL,
   status varchar(1) NOT NULL DEFAULT 'A',
   fecha_creacion datetime NOT NULL,
   creado_por varchar(30) NOT NULL,
@@ -57,13 +55,39 @@ create table productos(
 
 
 
+create table productos_lista_precios(
+	id_prod_precios int auto_increment,
+    id_producto int not null,
+	precio_semanal float(10,4) NOT NULL,
+	precio_diario float(10,4) NULL,
+    fecha_i_semana datetime not null,
+    fecha_f_semana datetime not null,
+	fecha_creacion datetime NOT NULL,
+	creado_por varchar(30) NOT NULL,
+	fecha_ultima_modificacion datetime,
+	fecha_modificacion_por varchar(30),
+    constraint pk_id_prod_precios primary key(id_prod_precios),
+    constraint fk_id_producto_prod_list_p foreign key(id_producto) references productos(id_producto)
+);
+
+
+create table notificaciones(
+	id_notificacion int auto_increment,
+    visto boolean default false not null,
+    titulo varchar(20) not null,
+    descripcion varchar(30) not null,
+    constraint pk_id_notificicacion primary key (id_notificacion)
+);
+
+
+
 CREATE TABLE adm_transacciones_log(
-  id_transaccion int NOT NULL,
+  id_transaccion int auto_increment,
   nombre_objeto varchar(100),
   id_objeto varchar(50),
   tipo_transaccion varchar(50),
   descripcion varchar(100),
-  fecha_creacion date,
+  fecha_creacion datetime,
   CONSTRAINT pk_id_transaccion PRIMARY KEY(id_transaccion)
 );
 
@@ -208,7 +232,10 @@ CREATE TABLE producto_cliente_p_especial(
   id_venta int NOT NULL,
   id_producto int NOT NULL,
   CONSTRAINT pk_p_especial PRIMARY KEY(id_p_especial)
+
 );
 
 
+insert producto_cliente_p_especial(id_cliente, id_venta, id_producto) values(2, 4, 69);
 
+insert producto_cliente_p_especial(id_cliente, id_venta, id_producto) values(5, 2, 55);

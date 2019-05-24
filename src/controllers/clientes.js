@@ -2,7 +2,7 @@ const faker = require('faker/locale/es_MX');
 
 module.exports = app => {
 
-    const Cliente = app.database.models.clientes;
+    const Cliente = app.database.models.Clientes;
 
     app.ConsultarClientes = (req, res) => {
 

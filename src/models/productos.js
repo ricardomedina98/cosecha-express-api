@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataType) => {
-    const Productos = sequelize.define('productos',{
+    const Productos = sequelize.define('Productos',{
         id_producto:{
             type: DataType.INTEGER,
             primaryKey: true,
@@ -56,24 +56,6 @@ module.exports = (sequelize, DataType) => {
                 }
             }
         },
-        precio_semanal : {
-            type: DataType.FLOAT,
-            allowNull: false,
-            validate: {
-                notNull:{
-                    msg: 'El precio semanal es necesario'
-                }
-            }
-        },
-        precio_diario : {
-            type: DataType.FLOAT,
-            allowNull: false,
-            validate: {
-                notNull:{
-                    msg: 'El precio diario es necesario'
-                }
-            }
-        },
         status: {
             type: DataType.ENUM,
             values: ['A', 'I'],
@@ -108,12 +90,12 @@ module.exports = (sequelize, DataType) => {
     
     Productos.associate = (models) => {
 
-        Productos.hasMany(models.mediciones, {
+        Productos.hasOne(models.Mediciones, {
             foreignKey: 'id_medicion',
             sourceKey: 'id_medicion'
         });
 
-        Productos.hasMany(models.categoria_productos, {
+        Productos.hasOne(models.Categoria_productos, {
             foreignKey: 'id_categoria',
             sourceKey: 'id_categoria'
         });

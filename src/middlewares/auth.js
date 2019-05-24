@@ -14,10 +14,8 @@ module.exports = app => {
                     OK: false,
                     msg: 'Token no valido'
                 });
-            }    
-
-            console.log('TOKEN VALIDADO');
-            
+            }
+        
             req.usuario = decode.usuario;
     
             next();
