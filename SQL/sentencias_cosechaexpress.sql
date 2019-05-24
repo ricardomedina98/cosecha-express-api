@@ -1,5 +1,5 @@
 use cosechaexpress;
-
+create database cosechaexpress;
 
 select * from usuarios;
 select * from productos;

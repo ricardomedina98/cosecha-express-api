@@ -1,11 +1,11 @@
 module.exports = {
     database: 'cosechaexpress',
     username: 'root',
-    password: 'hugo1010',    
+    password: '030498',    
     options:{        
         host: '127.0.0.1',
         dialect: 'mariadb',
-        port: '3308',
+        port: '3306',
         dialectOptions: {
             dateStrings: true,
             typeCast: true

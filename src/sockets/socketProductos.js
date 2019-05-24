@@ -1,6 +1,6 @@
 module.exports = app => {
 
-    const Productos = app.database.models.Productos;  
+    const Productos = app.database.models.productos;  
     const Models = app.database.models;
 
     const findAllProductos = () => {        
