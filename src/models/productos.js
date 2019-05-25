@@ -85,9 +85,6 @@ module.exports = (sequelize, DataType) => {
     });
 
 
-
-
-    
     Productos.associate = (models) => {
 
         Productos.hasOne(models.Mediciones, {
