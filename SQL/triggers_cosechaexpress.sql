@@ -20,6 +20,7 @@ END;//
 DELIMITER ;
 
 
+
 /*		TRIGGERS PRODUCTOS		*/
 
 DELIMITER //
@@ -53,6 +54,7 @@ END;//
 DELIMITER;
 
 
+
 /*		TRIGGERS CLIENTES		*/
 
 DELIMITER //
@@ -73,6 +75,8 @@ BEGIN
       NEW.fecha_modificacion_por = USER();   
 END;//
 DELIMITER ;
+
+
 
 /*		TRIGGERS PROVEEDORES		*/ 
 
@@ -115,6 +119,7 @@ END;//
 DELIMITER ;
 
 
+
 /*		TRIGGERS VENTAS		*/
 
 DELIMITER //
@@ -125,6 +130,8 @@ BEGIN
   set NEW.fecha_creacion = NOW(), NEW.creado_por = USER();  
 END;//
 DELIMITER ;
+
+
 
 /*		TRIGGERS DEVOLUCIONES		*/
 
@@ -159,5 +166,26 @@ CREATE TRIGGER lista_precios_bu_er
 BEGIN  
  SET NEW.fecha_ultima_modificacion = Now(), 
       NEW.fecha_modificacion_por = USER();   
+END;//
+DELIMITER ;
+
+
+
+
+/*TRIGGERS LISTA PRECIOS*/
+
+
+DELIMITER //
+CREATE TRIGGER lista_precios_bu_er
+  BEFORE insert ON producto_precio_esp
+  FOR EACH ROW 
+BEGIN  
+
+
+
+select * from lista_precios;
+
+
+
 END;//
 DELIMITER ;

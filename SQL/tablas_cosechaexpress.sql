@@ -232,10 +232,4 @@ CREATE TABLE producto_cliente_p_especial(
   id_venta int NOT NULL,
   id_producto int NOT NULL,
   CONSTRAINT pk_p_especial PRIMARY KEY(id_p_especial)
-
 );
-
-
-insert producto_cliente_p_especial(id_cliente, id_venta, id_producto) values(2, 4, 69);
-
-insert producto_cliente_p_especial(id_cliente, id_venta, id_producto) values(5, 2, 55);
