@@ -2,19 +2,24 @@ module.exports = app => {
 
     const Productos = app.database.models.Productos;  
     const Models = app.database.models;
+    
 
-    const findAllProductos = () => {        
-        Productos.findAll({ 
+    const getProductos = () => {   
+        console.log(Models);     
+        Productos.findAll({
             where: {
                 status: 'A'
             },
             include: [{
                 model: Models.Mediciones,
-                attributes: ['tipo_medicion']
+                attributes: ['id_medicion','tipo_medicion']
             }, {
                 model: Models.Categoria_productos,
-                required:false,
-                attributes: ['nombre_categoria']
+                attributes: ['id_categoria', 'nombre_categoria']
+            }, {
+                model: Models.Equivalencias,
+                required: false,
+                attributes: ['id_equivalencia', 'equivalencia1', 'equivalencia2', 'medicionEquiv1', 'medicionEquiv2']
             }]
         })
         .then(result => {            
@@ -25,8 +30,8 @@ module.exports = app => {
         });
     }
 
-    Productos.addHook('afterCreate', findAllProductos);
-    Productos.addHook('afterUpdate', findAllProductos);    
+    Productos.addHook('afterCreate', getProductos);
+    Productos.addHook('afterUpdate', getProductos);    
 
     return app;
 

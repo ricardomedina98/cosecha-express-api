@@ -53,6 +53,27 @@ END;//
 DELIMITER;
 
 
+DELIMITER //
+CREATE TRIGGER equivalencias_bi_er
+  BEFORE INSERT ON equivalencias
+  FOR EACH ROW 
+BEGIN     
+  set NEW.fecha_creacion = NOW(), NEW.creado_por = USER();  
+END;//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER equivalencias_ai_er
+  AFTER INSERT ON productos
+  FOR EACH ROW 
+BEGIN     
+  INSERT INTO equivalencias (equivalencia1, medicionEquiv1, equivalencia2, medicionEquiv2, id_producto)
+  VALUES(0,0,0,0,New.id_producto) ;
+END;//
+DELIMITER ;
+
+
 /*		TRIGGERS CLIENTES		*/
 
 DELIMITER //
@@ -161,3 +182,7 @@ BEGIN
       NEW.fecha_modificacion_por = USER();   
 END;//
 DELIMITER ;
+
+
+
+

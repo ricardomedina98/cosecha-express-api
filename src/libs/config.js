@@ -1,7 +1,7 @@
 module.exports = {
-    database: 'cosechaexpress',
+    database: 'cosechaexpress2',
     username: 'root',
-    password: 'hugo1010',    
+    password: '030498',    
     options:{        
         host: '127.0.0.1',
         dialect: 'mysql',

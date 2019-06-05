@@ -4,20 +4,26 @@ module.exports = app => {
 
     const Producto = app.database.models.Productos;
     const Mediciones = app.database.models.Mediciones;
-    const Cat_Prod = app.database.models.Categoria_productos;    
+    const Cat_Prod = app.database.models.Categoria_productos;
+    const Equivalencias = app.database.models.Equivalencias;
+    const sequelize = app.database.sequelize;    
+
 
     app.ObtenerProductos = (req, res) => {
-        Producto.findAll({ 
+        Producto.findAll({
             where: {
                 status: 'A'
             },
             include: [{
                 model: Mediciones,
-                attributes: ['tipo_medicion']
+                attributes: ['id_medicion','tipo_medicion']
             }, {
                 model: Cat_Prod,
-                required:false,
-                attributes: ['nombre_categoria']
+                attributes: ['id_categoria', 'nombre_categoria']
+            }, {
+                model: Equivalencias,
+                required: false,
+                attributes: ['id_equivalencia', 'equivalencia1', 'equivalencia2', 'medicionEquiv1', 'medicionEquiv2']
             }]
         })
         .then(result => {            
@@ -37,31 +43,27 @@ module.exports = app => {
 
         let body = req.body;
         
-        let producto = new Producto({
-            id_categoria: body.id_categoria || null,
+        let producto = new Producto({ 
+            id_categoria: body.id_categoria,     
             id_medicion: body.id_medicion,
             nombre_producto: body.nombre_producto,
             existencia: body.existencia,
             existencia_min: body.existencia_min,
-            existencia_max: body.existencia_max,
-            precio_semanal: body.precio_semanal,
-            precio_diario: body.precio_diario
-        });
-
+            existencia_max: body.existencia_max
+        });        
+        
         Producto.create(producto.dataValues, {
-            fields: ['id_categoria', 'id_medicion', 'nombre_producto',
-             'existencia', 'existencia_min', 'existencia_max', 'precio_semanal', 'precio_diario'],
-             include: [Mediciones]
+            fields: ['id_categoria' ,'id_medicion', 'nombre_producto',
+             'existencia', 'existencia_min', 'existencia_max']
         })
-        .then(result => {
-            app.io.emit('SHOW_PRODUCTS', { Productos: result });
+        .then(result => {                       
             res.json({
                 OK: true,
                 producto: result
             });
             
         })
-        .catch(err => {
+        .catch(err => {            
             res.status(412).json({
                 OK: false,
                 msg: err
@@ -70,7 +72,7 @@ module.exports = app => {
     }
 
     app.ActualizarProducto = (req, res) => {
-        
+       
         let id = req.params.id;
         let body = req.body;
             
@@ -80,10 +82,8 @@ module.exports = app => {
             nombre_producto: body.nombre_producto,
             existencia: body.existencia,
             existencia_min: body.existencia_min,
-            existencia_max: body.existencia_max,
-            precio_semanal: body.precio_semanal,
-            precio_diario: body.precio_diario
-        });
+            existencia_max: body.existencia_max          
+        });        
 
         Producto.update(producto.dataValues, {            
             where : {
@@ -91,7 +91,7 @@ module.exports = app => {
             },
             individualHooks: true,            
             fields: ['id_categoria', 'id_medicion', 'nombre_producto', 'existencia', 'existencia_min',
-                    'existencia_max', 'precio_semanal', 'precio_diario']
+                    'existencia_max']
         }).then(result => {            
             res.json({
                 OK: true,
@@ -197,6 +197,59 @@ module.exports = app => {
 
         res.send(`${num} productos creados`);
 
+    }
+
+    app.EquivalenciaProducto = async(req, res) => {
+
+        let id = req.params.id;
+        let body = req.body;
+
+        sequelize.transaction(async t => {
+
+            producto = await Producto.update({
+                precio_semanal: body.precio_semanal
+            }, {            
+                where : {
+                    id_producto: id
+                },     
+                fields: ['precio_semanal'],
+                transaction: t,
+                individualHooks: true            
+            }).then(result => {                
+            }).catch(error => {
+                console.log(error);
+                return t.rollback();
+            });
+
+            equivalencias = await Equivalencias.update({
+                equivalencia1: req.body.equivalencia1,
+                equivalencia2: req.body.equivalencia2,
+                medicionEquiv1: req.body.medicionEquiv1,
+                medicionEquiv2: req.body.medicionEquiv2,
+                porcentaje: req.body.porcentaje
+            }, {
+                where : {
+                    id_producto: id
+                }, 
+                fields: ['equivalencia1', 'equivalencia2', 'medicionEquiv1', 'medicionEquiv2', 'porcentaje'],
+                transaction: t,
+                individualHooks: true   
+            }).then(result => {
+            }).catch(error => {
+                console.log(error);
+                return t.rollback();
+            });
+
+        }).then(result => {
+            res.json({
+                OK: true
+            });
+        }).catch(error => {
+            console.log(error);
+            res.status(402).json({
+                OK: false
+            });
+        });       
     }
 
     return app;

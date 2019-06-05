@@ -3,18 +3,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 module.exports = app => {
-
     const Usuario = app.database.models.Usuarios;
 
     app.post('/iniciar_sesion', (req, res) => {
-
         let body = req.body;                
-
         Usuario.scope('withPassword').findOne({
             where: {
                 nombre_usuario: body.nombre_usuario
             }
-        }).then(result => {            
+        }).then(result => {
             
 
             if(!result || !bcrypt.compareSync(body.contrasena, result.dataValues.contrasena)){
@@ -37,8 +34,6 @@ module.exports = app => {
                 usuario: result,
                 token
             });
-                
-            
 
         }).catch(err => {
             return res.status(412).json({

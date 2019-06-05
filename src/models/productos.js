@@ -7,54 +7,31 @@ module.exports = (sequelize, DataType) => {
         },
         nombre_producto:{
             type: DataType.STRING,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El nombre es necesario'
-                },
-                notEmpty: true
-            }
+            allowNull: false
+        },
+        id_medicion: {
+            type: DataType.INTEGER,
+            allowNull: false
         },
         id_categoria: {
             type: DataType.INTEGER,
             allowNull: true
         },
-        id_medicion: {
-            type: DataType.INTEGER,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El id de la medicion es necesario'
-                },
-                notEmpty: true
-            }
+        precio_semanal:{
+            type: DataType.FLOAT,
+            allowNull: true
         },
         existencia:{
             type: DataType.FLOAT,
-            allowNull: false,
-            validate: {
-                notNull:{
-                    msg: 'La existencia es necesaria'
-                }
-            }
+            allowNull: false
         },
         existencia_min: {
             type: DataType.FLOAT,
-            allowNull: false,
-            validate: {
-                notNull:{
-                    msg: 'La existencia minima es necesaria'
-                }
-            }
+            allowNull: false
         },
         existencia_max: {
             type: DataType.FLOAT,
-            allowNull: false,
-            validate: {
-                notNull:{
-                    msg: 'La existencia maxima es necesaria'
-                }
-            }
+            allowNull: false
         },
         status: {
             type: DataType.ENUM,
@@ -85,17 +62,23 @@ module.exports = (sequelize, DataType) => {
     });
 
 
-    Productos.associate = (models) => {
+    Productos.associate = (models) => {  
+                
+        Productos.hasOne(models.Categoria_productos, {
+            foreignKey: 'id_categoria',
+            sourceKey: 'id_categoria'
+        });
 
         Productos.hasOne(models.Mediciones, {
             foreignKey: 'id_medicion',
             sourceKey: 'id_medicion'
         });
 
-        Productos.hasOne(models.Categoria_productos, {
-            foreignKey: 'id_categoria',
-            sourceKey: 'id_categoria'
+        Productos.hasOne(models.Equivalencias, {
+            foreignKey: 'id_producto',
+            sourceKey: 'id_producto'
         });
+
     }
     
 

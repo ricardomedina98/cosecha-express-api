@@ -9,7 +9,7 @@ module.exports = app => {
         .then(result => {
             res.json({
                 OK: true,
-                categorias: result
+                Categorias: result
             });
         })
         .catch(err => {
