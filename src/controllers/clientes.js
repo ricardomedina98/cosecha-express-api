@@ -3,6 +3,9 @@ const faker = require('faker/locale/es_MX');
 module.exports = app => {
 
     const Cliente = app.database.models.Clientes;
+    const Productos = app.database.models.Productos;
+    const Productos_Clientes = app.database.models.Productos_Clientes;
+    const sequelize = app.database.sequelize;    
 
     app.ConsultarClientes = (req, res) => {
 
@@ -14,7 +17,37 @@ module.exports = app => {
         .then(result => {
             res.json({
                 OK: true,
-                clientes: result
+                Clientes: result
+            });
+        })
+        .catch(err => {
+            res.json({
+                OK: false,
+                msg: err
+            });
+        });
+
+    }
+
+    app.ConsultarProductosClientes = (req, res) => {
+
+        let id = req.params.id; 
+        console.log(id);       
+
+        Cliente.findByPk(id,{
+            where: {                
+                status: 'A'
+            },
+            include: [{
+                model: Productos,
+                as: 'ProductosClientes',                
+                required:true
+            }]
+        })
+        .then(result => {
+            res.json({
+                OK: true,
+                Clientes: result
             });
         })
         .catch(err => {
@@ -46,11 +79,11 @@ module.exports = app => {
         .then(result => {
             res.json({
                 OK: true,
-                cliente: result
+                Cliente: result
             });
         })
         .catch(err => {
-            res.status(412).json({
+            res.status(409).json({
                 OK: false,
                 msg: err
             });
@@ -118,6 +151,77 @@ module.exports = app => {
             res.status(412).json({
                 OK: false,
                 msg: err
+            });
+        });
+    }
+
+    app.AgregarProuctosClientes = (req, res) => {
+
+        let products = req.body;
+        
+        sequelize.transaction(async t => {
+
+            await products.forEach((element, index) => {
+
+                let precio_cliente = new Productos_Clientes({
+                    id_producto: element.id_producto,
+                    id_cliente: element.id_cliente,
+                    precio_especial: element.precio_especial
+                });   
+                Productos_Clientes.create(precio_cliente.dataValues,
+                {
+                    transaction: t
+                })
+                .then(result => {
+                    
+                }).catch(error => {
+                    console.log(error);
+                });                        
+                
+            })
+        })
+        .then(result => {
+            res.json({
+                OK: true
+            });
+        }).catch(error => {
+            res.status(402).json({
+                OK: true
+            });
+        });
+
+    }
+
+    app.EliminarProductoCliente = (req, res) => {        
+
+        Productos_Clientes.findOne({
+            where: {
+                id_producto: req.params.id_producto,
+                id_cliente: req.params.id_cliente
+            }
+        })
+        .then(producto_prec_espec => {
+
+            if(!producto_prec_espec){
+                res.status(404).json({
+                    OK: false,
+                    msg: 'Producto no encontrado'
+                });
+            }
+
+            producto_prec_espec.destroy()
+            .then(result => {
+                res.json({
+                    OK: true,
+                    row_deleted: true
+                });
+            });
+            
+        })
+        .catch(err => {
+            res.status(404).json({
+                OK: false,
+                msg: 'Producto no encontrado'
             });
         });
     }

@@ -216,8 +216,7 @@ module.exports = app => {
                 transaction: t,
                 individualHooks: true            
             }).then(result => {                
-            }).catch(error => {
-                console.log(error);
+            }).catch(error => {                
                 return t.rollback();
             });
 
@@ -240,12 +239,16 @@ module.exports = app => {
                 return t.rollback();
             });
 
-        }).then(result => {
+            t.afterCommit((transaction) => {                
+                app.getProductos;
+            });
+
+        }).then(result => {            
             res.json({
                 OK: true
-            });
-        }).catch(error => {
-            console.log(error);
+            });            
+
+        }).catch(error => {            
             res.status(402).json({
                 OK: false
             });

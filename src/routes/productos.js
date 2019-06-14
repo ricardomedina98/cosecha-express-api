@@ -6,13 +6,15 @@ module.exports = app => {
 
     app.get('/productos',verificarToken, Producto.ObtenerProductos);
 
+    app.get('/productos/:id', verificarToken, Producto.ConsultarProductoID);
+
     app.post('/productos', verificarToken, Producto.CrearProducto);
 
     app.put('/productos/:id', verificarToken, Producto.ActualizarProducto);
 
-    app.get('/productos/:id', verificarToken, Producto.ConsultarProductoID);
-
     app.delete('/productos/:id', verificarToken, Producto.EliminarProducto);
+
+    app.delete('/clientes/:id_cliente/productos/:id_producto', verificarToken, Producto.EliminarProductoCliente);
     
     app.get('/productos/faker/:num', verificarToken, Producto.GenerarProductos);
 

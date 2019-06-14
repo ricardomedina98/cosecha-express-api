@@ -3,7 +3,7 @@ module.exports = (sequelize, DataType) => {
         id_producto:{
             type: DataType.INTEGER,
             primaryKey: true,
-            autoincrement: true
+            autoIncrement: true
         },
         nombre_producto:{
             type: DataType.STRING,
@@ -60,7 +60,7 @@ module.exports = (sequelize, DataType) => {
         updatedAt: 'fecha_ultima_modificacion',
         timestamps: false
     });
-
+      
 
     Productos.associate = (models) => {  
                 
@@ -79,7 +79,23 @@ module.exports = (sequelize, DataType) => {
             sourceKey: 'id_producto'
         });
 
+        Productos.belongsToMany(models.Clientes, {
+            as:'productosClientes',
+            through: {
+                model: models.Productos_Clientes
+            }, 
+            foreignKey: 'id_producto',
+            sourceKey: 'id_producto'
+        });
+
     }
+
+    
+    Productos.addHook('beforeCreate', 'hookBeforeCreate', (producto, options) => {        
+        console.log(options);
+        return Promise.reject(new Error("I'm afraid I can't let you do that!"));
+    });
+    
     
 
     return Productos;

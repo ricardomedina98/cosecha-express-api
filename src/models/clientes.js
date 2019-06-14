@@ -4,7 +4,7 @@ module.exports = (sequelize, DataType)=> {
         id_cliente: {
             type: DataType.INTEGER,
             primaryKey: true,
-            autoincrement: true
+            autoIncrement: true
         },
         nombre_cliente: {
             type: DataType.STRING,
@@ -93,6 +93,46 @@ module.exports = (sequelize, DataType)=> {
         updatedAt: 'fecha_ultima_modificacion',
         timestamps: false
     });
+
+    Clientes.associate = (models) => {
+
+        Clientes.belongsToMany(models.Productos, {
+            as: 'ProductosClientes',
+            through: {
+                model: models.Productos_Clientes
+            },
+            foreignKey: 'id_cliente',
+            sourceKey: 'id_cliente'
+        });
+        
+
+    }
+
+    
+
+
+    Clientes.addHook('beforeCreate', (client, options) => {
+
+        return new Promise( (resolve, reject) => {
+            Clientes.findAndCountAll({
+                where: {
+                    status: 'A',
+                    [Op.or]: [{
+                        nombre_empresa_cliente: client.nombre_empresa_cliente,
+                        telefono_cliente: client.telefono_cliente,
+                        correo_cliente: client.correo_cliente
+                    }]
+                }
+            }).then( result => {
+                console.log(result);
+                return resolve(client, options);
+            }).catch(err => {
+                console.log(err);
+            });
+        });
+
+    });
+
 
     return Clientes;
 }

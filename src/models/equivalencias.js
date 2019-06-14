@@ -3,7 +3,7 @@ module.exports = (sequelize, DataType) => {
         id_equivalencia:{
             type: DataType.INTEGER,
             primaryKey: true,
-            autoincrement: true
+            autoIncrement: true
         },
         equivalencia1:{
             type: DataType.INTEGER,

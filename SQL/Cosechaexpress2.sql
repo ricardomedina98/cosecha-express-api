@@ -15,11 +15,14 @@ create table usuarios(
 );
 
 
+
 CREATE TABLE mediciones(
   id_medicion int AUTO_INCREMENT,
   tipo_medicion varchar(45) NOT NULL,
   CONSTRAINT pk_id_medicion PRIMARY KEY(id_medicion)
 );
+
+SELECT * FROM equivalencias;
 
 create table categorias_productos(
   id_categoria int auto_increment,
@@ -28,7 +31,7 @@ create table categorias_productos(
   CONSTRAINT un_categoria unique(nombre_categoria)  
 );
 
-SELECT * FROM productos;
+SELECT * FROM equivalencias;
 
 create table productos(
   id_producto int auto_increment,
@@ -62,6 +65,7 @@ CREATE TABLE equivalencias(
   equivalencia2 float(8, 2),
   medicionEquiv2 int NULL,
   id_producto int NOT NULL,
+  porcentaje float(10, 4) null,
   fecha_creacion datetime NOT NULL,
   creado_por varchar(30) NOT NULL,
   fecha_ultima_modificacion datetime,
@@ -72,8 +76,6 @@ CREATE TABLE equivalencias(
   CONSTRAINT fk_medicionEquiv2_equivalencias FOREIGN KEY(medicionEquiv2) REFERENCES mediciones(id_medicion),
   CONSTRAINT un_id_producto UNIQUE(id_producto)
 );
-
-
 
 create table clientes(
   id_cliente int auto_increment,
@@ -96,22 +98,34 @@ create table clientes(
 );
 
 CREATE TABLE clientes_direcciones(
-  id_direccion
+  id_clientes_direcciones int AUTO_INCREMENT,
+  
+);
+
+CREATE TABLE direccion_estados(
+  id_estado int AUTO_INCREMENT,
+  
+);
+
+CREATE TABLE direccion_municipios(
+  id_municipio int AUTO_INCREMENT,
+
 );
 
 create table producto_precio_esp(
   id_producto_precio_esp int auto_increment,
   id_cliente int not null,
   id_producto int not null,
-  precio_especial float(10, 4) NOT null,
-  porcentaje float(10, 4) null,
+  precio_especial float(10, 4) NULL,
+  porcentaje float(10, 4) NULL,
   CONSTRAINT pk_id_producto_precio_esp primary key (id_producto_precio_esp),
   CONSTRAINT fk_id_producto_precio_esp_productos FOREIGN KEY(id_producto) REFERENCES productos(id_producto),
   CONSTRAINT fk_id_producto_precio_esp_clientes FOREIGN KEY(id_cliente) REFERENCES clientes(id_cliente)
 );
-
+SELECT * FROM clientes c INNER JOIN producto_precio_esp ppe ON c.id_cliente = ppe.id_cliente INNER JOIN productos p ON ppe.id_producto = p.id_producto;
 SELECT e.id_producto ,e.id_equivalencia, p.precio_semanal, e.equivalencia1, e.medicionEquiv1, e.equivalencia2, e.medicionEquiv2 FROM productos p INNER JOIN equivalencias e ON p.id_producto = e.id_producto;
 SELECT * FROM equivalencias e;
+SELECT * FROM productos p;
 
 CREATE TABLE adm_transacciones_log(
   id_transaccion int auto_increment,
@@ -123,19 +137,20 @@ CREATE TABLE adm_transacciones_log(
   CONSTRAINT pk_id_transaccion PRIMARY KEY(id_transaccion)
 );
 
-SELECT * FROM productos p;
 
-
-ROLLBACK;
-
-SELECT * FROM equivalencias e;
 
 /*SENTENCIAS*/
 
 /*APLICAR DESCUENTO A LISTA DE PRODUCTO DE UN CLIENTE*/
-CALL lista_productos_descuento_cliente(3, 1.4, '+');
+CALL lista_productos_descuento_cliente(6, 2.8, '+');
+CALL actualizar_lista_precios(6);
+SELECT * FROM productos p;
 SELECT * FROM equivalencias e;
 SELECT * FROM producto_precio_esp ppe;
+SELECT * FROM usuarios u;
+SELECT * FROM clientes c;
+USE cosechaexpress2;
+UPDATE producto_precio_esp ppe SET ppe.precio_especial = 743, ppe.porcentaje = NULL WHERE ppe.id_cliente = 6 AND ppe.id_producto = 32;
 
 
 DROP TRIGGER IF EXISTS producto_precio_esp_bi;
@@ -149,11 +164,6 @@ BEGIN
 END;//
 DELIMITER ;
 
-SELECT * FROM usuarios u;
-
-
-
-
 
 
 INSERT INTO equivalencias(equivalencia1, medicionEquiv1, equivalencia2, medicionEquiv2, id_producto)
@@ -162,8 +172,15 @@ INSERT INTO equivalencias(equivalencia1, medicionEquiv1, equivalencia2, medicion
 INSERT INTO producto_precio_esp (id_cliente, id_producto)
   VALUES (3, 5);
 
+SELECT * FROM producto_precio_esp ppe;
+SELECT * FROM productos p;
 
-SELECT p.id_producto, p.nombre_producto,e.id_equivalencia , e.equivalencia1, e.equivalencia2 FROM productos p LEFT JOIN equivalencias e ON p.id_producto = e.id_producto;
+INSERT INTO producto_precio_esp (id_cliente, id_producto)
+  VALUES (6, 39);
 
+SELECT * FROM clientes c INNER JOIN producto_precio_esp ppe ON c.id_cliente = ppe.id_cliente INNER JOIN productos p ON ppe.id_producto = p.id_producto WHERE c.id_cliente = 6;
 
-SELECT * FROM usuarios u;
+SELECT * FROM producto_precio_esp ppe;
+
+UPDATE `equivalencias` SET `equivalencia1`=250,`equivalencia2`=25,`medicionEquiv1`=1,`medicionEquiv2`=?,`porcentaje`=? WHERE `id_producto` = ?;
+

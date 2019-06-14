@@ -4,12 +4,13 @@ module.exports = app => {
     const Models = app.database.models;
     
 
-    const getProductos = () => {   
-        console.log(Models);     
+    app.getProductos = () => {   
+        console.log('SoketIO');     
         Productos.findAll({
             where: {
                 status: 'A'
             },
+            lock: true,
             include: [{
                 model: Models.Mediciones,
                 attributes: ['id_medicion','tipo_medicion']
@@ -28,10 +29,10 @@ module.exports = app => {
         .catch(error => {
             console.log(error);
         });
-    }
+    };
 
-    Productos.addHook('afterCreate', getProductos);
-    Productos.addHook('afterUpdate', getProductos);    
+    Productos.addHook('afterCreate', app.getProductos);
+    Productos.addHook('afterUpdate', app.getProductos);    
 
     return app;
 
