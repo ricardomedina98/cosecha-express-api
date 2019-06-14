@@ -90,11 +90,13 @@ module.exports = (sequelize, DataType) => {
 
     }
 
-    
+    /*
     Productos.addHook('beforeCreate', 'hookBeforeCreate', (producto, options) => {        
         console.log(options);
-        return Promise.reject(new Error("I'm afraid I can't let you do that!"));
+        return Promise.reject(new Error);
     });
+
+    */
     
     
 
