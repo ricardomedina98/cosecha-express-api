@@ -20,6 +20,7 @@ END;//
 DELIMITER ;
 
 
+
 /*		TRIGGERS PRODUCTOS		*/
 
 DELIMITER //
@@ -53,6 +54,7 @@ END;//
 DELIMITER;
 
 
+<<<<<<< HEAD
 DELIMITER //
 CREATE TRIGGER equivalencias_bi_er
   BEFORE INSERT ON equivalencias
@@ -73,6 +75,8 @@ BEGIN
 END;//
 DELIMITER ;
 
+=======
+>>>>>>> c6900fbeb6ea68c6847604eb55edef3ee29ff3be
 
 /*		TRIGGERS CLIENTES		*/
 
@@ -94,6 +98,8 @@ BEGIN
       NEW.fecha_modificacion_por = USER();   
 END;//
 DELIMITER ;
+
+
 
 /*		TRIGGERS PROVEEDORES		*/ 
 
@@ -136,6 +142,7 @@ END;//
 DELIMITER ;
 
 
+
 /*		TRIGGERS VENTAS		*/
 
 DELIMITER //
@@ -146,6 +153,8 @@ BEGIN
   set NEW.fecha_creacion = NOW(), NEW.creado_por = USER();  
 END;//
 DELIMITER ;
+
+
 
 /*		TRIGGERS DEVOLUCIONES		*/
 
@@ -186,3 +195,23 @@ DELIMITER ;
 
 
 
+<<<<<<< HEAD
+=======
+/*TRIGGERS LISTA PRECIOS*/
+
+
+DELIMITER //
+CREATE TRIGGER lista_precios_bu_er
+  BEFORE insert ON producto_precio_esp
+  FOR EACH ROW 
+BEGIN  
+
+
+
+select * from lista_precios;
+
+
+
+END;//
+DELIMITER ;
+>>>>>>> c6900fbeb6ea68c6847604eb55edef3ee29ff3be
