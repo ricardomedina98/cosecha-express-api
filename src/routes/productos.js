@@ -3,12 +3,13 @@ module.exports = app => {
 
     const Producto = app.controllers.productos;
     const { verificarToken } = app.middlewares.auth;
+    const { UniqueProducto } = app.middlewares.producto;
 
     app.get('/productos',verificarToken, Producto.ObtenerProductos);
 
     app.get('/productos/:id', verificarToken, Producto.ConsultarProductoID);
 
-    app.post('/productos', verificarToken, Producto.CrearProducto);
+    app.post('/productos', [verificarToken, UniqueProducto], Producto.CrearProducto);
 
     app.put('/productos/:id', verificarToken, Producto.ActualizarProducto);
 

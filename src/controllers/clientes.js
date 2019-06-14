@@ -72,6 +72,8 @@ module.exports = app => {
             correo_cliente: body.correo_cliente
         });
 
+        console.log(cliente.dataValues);
+
         Cliente.create(cliente.dataValues, {
             fields: ['nombre_cliente', 'apellido1_cliente', 'apellido2_cliente',
             'nombre_empresa_cliente', 'telefono_cliente', 'correo_cliente']
@@ -83,6 +85,7 @@ module.exports = app => {
             });
         })
         .catch(err => {
+            console.log(err);
             res.status(409).json({
                 OK: false,
                 msg: err

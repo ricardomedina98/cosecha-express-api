@@ -108,31 +108,5 @@ module.exports = (sequelize, DataType)=> {
 
     }
 
-    
-
-
-    Clientes.addHook('beforeCreate', (client, options) => {
-
-        return new Promise( (resolve, reject) => {
-            Clientes.findAndCountAll({
-                where: {
-                    status: 'A',
-                    [Op.or]: [{
-                        nombre_empresa_cliente: client.nombre_empresa_cliente,
-                        telefono_cliente: client.telefono_cliente,
-                        correo_cliente: client.correo_cliente
-                    }]
-                }
-            }).then( result => {
-                console.log(result);
-                return resolve(client, options);
-            }).catch(err => {
-                console.log(err);
-            });
-        });
-
-    });
-
-
     return Clientes;
 }

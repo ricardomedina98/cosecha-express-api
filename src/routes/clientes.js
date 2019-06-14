@@ -2,12 +2,13 @@ module.exports = app => {
 
     const Cliente = app.controllers.clientes;
     const { verificarToken, verificarAdmin_Role } = app.middlewares.auth;
+    const { UniqueCliente } = app.middlewares.cliente;
 
     app.get('/clientes', [verificarToken, verificarAdmin_Role] , Cliente.ConsultarClientes);
 
     app.get('/clientes/:id/productos', [verificarToken, verificarAdmin_Role] , Cliente.ConsultarProductosClientes);
 
-    app.post('/clientes', [verificarToken, verificarAdmin_Role] , Cliente.CrearCliente);
+    app.post('/clientes', [verificarToken, verificarAdmin_Role, UniqueCliente] , Cliente.CrearCliente);
 
     app.put('/clientes/productos', [verificarToken, verificarAdmin_Role] , Cliente.AgregarProuctosClientes);
 
