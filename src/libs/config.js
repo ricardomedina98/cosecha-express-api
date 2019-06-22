@@ -17,7 +17,14 @@ module.exports = {
         }
     },
     SEED_TOKEN: process.env.SEED_TOKEN || 'cosechaexpress2019',
-    CADUCIDAD_TOKEN: process.env.CADUCIDAD_TOKEN || '48h'
+    CADUCIDAD_TOKEN: process.env.CADUCIDAD_TOKEN || '48h',
+    correoOpciones: {
+        correo_electronico: 'lacosechaexpress.notificaciones@gmail.com',
+        contrasena_correo: 'lacosechaexpress2019',
+        servicio: 'gmail'
+    }
+    
+
 
     
 };

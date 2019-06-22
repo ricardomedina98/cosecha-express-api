@@ -7,7 +7,7 @@ module.exports = (sequelize, DataType) => {
         },
         equivalencia1:{
             type: DataType.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         medicionEquiv1: {
             type: DataType.INTEGER,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataType) => {
         },
         equivalencia2: {
             type: DataType.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         medicionEquiv2: {
             type: DataType.INTEGER,

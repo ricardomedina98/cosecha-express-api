@@ -8,63 +8,27 @@ module.exports = (sequelize, DataType)=> {
         },
         nombre_cliente: {
             type: DataType.STRING,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El nombre de cliente es necesario'
-                },
-                notEmpty: true
-            }
+            allowNull: true
         },
         apellido1_cliente: {
             type: DataType.STRING,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El apellido paterno del cliente es necesario'
-                },
-                notEmpty: true
-            }
+            allowNull: true
         },
         apellido2_cliente: {
             type: DataType.STRING,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El apellido materno del cliente es necesario'
-                },
-                notEmpty: true
-            }
+            allowNull: true
         },
         nombre_empresa_cliente: {
             type: DataType.STRING,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El nombre de la empresa es necesario'
-                },
-                notEmpty: true
-            }
+            allowNull: false
         },
         telefono_cliente: {
             type: DataType.STRING,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El telefono del cliente es necesario'
-                },
-                notEmpty: true
-            }
+            allowNull: true
         },
         correo_cliente: {
             type: DataType.STRING,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El correo del cliente es necesario'
-                },
-                notEmpty: true
-            }
+            allowNull: false
         },
         status: {
             type: DataType.ENUM,
