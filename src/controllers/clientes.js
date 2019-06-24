@@ -319,20 +319,20 @@ module.exports = app => {
             observacion: req.body.observacion
         }
 
-        let templateHTMLPDF = fs.readFileSync(path.join(process.cwd(), 'src/pdfs/lista_productos_cliente_pdf.html'), 'utf8');
+        let templateHTMLPDF = fs.readFileSync(path.join(process.cwd(), 'pdfs/lista_productos_cliente_pdf.html'), 'utf8');
         let template = handlebars.compile(templateHTMLPDF);
         let finalHtml = template(dataBinding);
         let options = {
             format: 'A4',
             headerTemplate: "<p></p>",
-            footerTemplate: `<div style="font-size: 10px; margin-left: 30px;">Cosecha Express ${moment().format('YYYY')}</div><div style="font-size: 10px; float: right;">Desarrollado por Grupo TLK</div>`,
+            footerTemplate: `<div style="font-size: 10px; margin-left: 30px;">Cosecha Express ${moment().format('YYYY')}</div> <span>-</span> <div style="font-size: 10px; float: right;">Desarrollado por Grupo TLK</div>`,
             displayHeaderFooter: true,
             margin: {
                 top: "20px",
                 bottom: "60px"
             },
             printBackground: true,
-            path: `src/files/pdfs/lista_precios_${fileNameargSend}.pdf`
+            path: `files/pdfs/lista_precios_${fileNameargSend}.pdf`
         }
 
         const browser = await puppeteer.launch({ headless: true });
@@ -424,7 +424,7 @@ module.exports = app => {
 		// Write Buffer
         workbook.xlsx.write(res)
         .then(() => {
-            res.download(res);
+            res.end();
         });
         
     }

@@ -49,6 +49,8 @@ create table productos(
 );
 
 
+SELECT * FROM productos p WHERE p.id_producto = 42;
+
 
 CREATE TABLE equivalencias(
   id_equivalencia int AUTO_INCREMENT, 

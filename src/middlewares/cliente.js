@@ -33,7 +33,7 @@ module.exports = app => {
         if(cliente_correo.length > 0)
             fields.un_correo_cliente = 'correo_cliente';
 
-        if(fields.un_nombre_empresa_cliente && fields.un_correo_cliente) {
+        if(fields.un_nombre_empresa_cliente || fields.un_correo_cliente) {
             return res.status(422).json({
                 OK: false,
                 msg: {
@@ -68,7 +68,7 @@ module.exports = app => {
         if(cliente_correo.length > 0)
             fields.un_correo_cliente = 'correo_cliente';
 
-        if(fields.un_nombre_empresa_cliente && fields.un_correo_cliente) {
+        if(fields.un_nombre_empresa_cliente || fields.un_correo_cliente) {
             return res.status(422).json({
                 OK: false,
                 msg: {
