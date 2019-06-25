@@ -105,6 +105,8 @@ BEGIN
 END;//
 DELIMITER ;
 
+DROP TRIGGER productos_precio_esp_au_er;
+
 
 /*		TRIGGERS CLIENTES		*/
 

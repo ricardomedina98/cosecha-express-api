@@ -109,7 +109,8 @@ create table producto_precio_esp(
 
 CREATE TABLE adm_transacciones_log(
   id_transaccion int auto_increment,
-  nombre_objeto varchar(100), /*Nombre de la tabla*/  
+  nombre_tabla varchar(100), /*Nombre de la tabla*/
+  nombre_objeto varchar(100), /*Nombre del objeto*/
   id_objeto varchar(50), /*ID del objeto al que se aplicara los cambios*/
   tipo_transaccion varchar(50), /*UPDATE, DELETE, INSERT*/
   descripcion varchar(100), /*Ej: Creacion de registro + nombre_objeto*/
@@ -117,7 +118,20 @@ CREATE TABLE adm_transacciones_log(
   CONSTRAINT pk_id_transaccion PRIMARY KEY(id_transaccion)
 );
 
+CREATE TABLE adm_precios_log(
+  id_precio_log int AUTO_INCREMENT,
+  nombre_tabla varchar(100) NULL,
+  id_objeto int NULL,
+  id_cliente int NULL,
+  precio_anterior float NULL,
+  precio_nuevo float NULL,  
+  fecha_creacion datetime DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT pk_id_precio_log PRIMARY KEY(id_precio_log)
+);
+SELECT @@SYSTEM_TIME_ZONE, @@TIME_ZONE, NOW();
 
+  SELECT * FROM adm_transacciones_log atl;
+  SELECT* FROM adm_precios_log apl;
 /*SENTENCIAS*/
 
 /*APLICAR DESCUENTO A LISTA DE PRODUCTO DE UN CLIENTE*/
