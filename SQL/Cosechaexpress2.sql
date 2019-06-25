@@ -95,20 +95,6 @@ ALTER TABLE clientes DROP INDEX un_nombre_empresa_cliente;
 ALTER TABLE clientes DROP INDEX un_telefono_cliente;
 ALTER TABLE clientes DROP INDEX un_correo_cliente;
 
-CREATE TABLE clientes_direcciones(
-  id_clientes_direcciones int AUTO_INCREMENT,
-  
-);
-
-CREATE TABLE direccion_estados(
-  id_estado int AUTO_INCREMENT,
-  
-);
-
-CREATE TABLE direccion_municipios(
-  id_municipio int AUTO_INCREMENT,
-
-);
 
 create table producto_precio_esp(
   id_producto_precio_esp int auto_increment,
@@ -123,11 +109,11 @@ create table producto_precio_esp(
 
 CREATE TABLE adm_transacciones_log(
   id_transaccion int auto_increment,
-  nombre_objeto varchar(100),
-  id_objeto varchar(50),
-  tipo_transaccion varchar(50),
-  descripcion varchar(100),
-  fecha_creacion datetime,
+  nombre_objeto varchar(100), /*Nombre de la tabla*/  
+  id_objeto varchar(50), /*ID del objeto al que se aplicara los cambios*/
+  tipo_transaccion varchar(50), /*UPDATE, DELETE, INSERT*/
+  descripcion varchar(100), /*Ej: Creacion de registro + nombre_objeto*/
+  fecha_creacion datetime DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT pk_id_transaccion PRIMARY KEY(id_transaccion)
 );
 
@@ -137,47 +123,4 @@ CREATE TABLE adm_transacciones_log(
 /*APLICAR DESCUENTO A LISTA DE PRODUCTO DE UN CLIENTE*/
 CALL lista_productos_descuento_cliente(56, 2.8, '+');
 CALL restaurar_lista_precios(56);
-SELECT * FROM productos p WHERE p.id_producto = 42;
-SELECT * FROM equivalencias e WHERE e.id_producto = 44;
-SELECT * FROM producto_precio_esp ppe WHERE ppe.id_cliente = 56;
-SELECT * FROM usuarios u;
-SELECT * FROM clientes c;
 CALL lista_productos_descuento_cliente(56, 5.5, '+');
-SELECT ppe.precio_especial INTO @precio_especial FROM producto_precio_esp ppe WHERE ppe.id_producto = 43 ;
-USE cosechaexpress2;
-UPDATE producto_precio_esp ppe SET ppe.precio_especial = 743, ppe.porcentaje = NULL WHERE ppe.id_cliente = 6 AND ppe.id_producto = 32;
-UPDATE `producto_precio_esp` SET `precio_especial`=123.2 WHERE `id_cliente` = 56 AND `id_producto` = 51;
-DROP TRIGGER IF EXISTS producto_precio_esp_bi;
-DELIMITER //
-CREATE TRIGGER producto_precio_esp_bi
-  BEFORE INSERT ON producto_precio_esp
-  FOR EACH ROW 
-BEGIN  
-  SELECT p.precio_semanal INTO @precio_actual FROM productos p WHERE p.id_producto = NEW.id_producto;
-  SET NEW.precio_especial = @precio_actual;
-END;//
-DELIMITER ;
-
-
-
-INSERT INTO equivalencias(equivalencia1, medicionEquiv1, equivalencia2, medicionEquiv2, id_producto)
-  VALUES (150, 1, 50, 3, 6);
-
-INSERT INTO producto_precio_esp (id_cliente, id_producto)
-  VALUES (3, 5);
-
-SELECT * FROM producto_precio_esp ppe;
-SELECT * FROM productos p;
-
-INSERT INTO producto_precio_esp (id_cliente, id_producto)
-  VALUES (6, 39);
-
-SELECT * FROM clientes c INNER JOIN producto_precio_esp ppe ON c.id_cliente = ppe.id_cliente INNER JOIN productos p ON ppe.id_producto = p.id_producto WHERE c.id_cliente = 6;
-
-SELECT * FROM producto_precio_esp ppe;
-
-UPDATE `equivalencias` SET `equivalencia1`=250,`equivalencia2`=25,`medicionEquiv1`=1,`medicionEquiv2`=?,`porcentaje`=? WHERE `id_producto` = ?;
-
-
-
-SELECT * FROM clientes c WHERE c.id_cliente = 6;

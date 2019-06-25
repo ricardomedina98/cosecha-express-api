@@ -18,7 +18,7 @@ app.io = socketIO;
 app.use(cors());
 
 //Local mode add {cwd: 'src'}
-consign()
+consign({cwd: 'src'})
 .include('libs/config.js')
 .then('./database.js')    
 .then('middlewares')
