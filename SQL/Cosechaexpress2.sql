@@ -130,11 +130,14 @@ CREATE TABLE adm_precios_log(
 );
 SELECT @@SYSTEM_TIME_ZONE, @@TIME_ZONE, NOW();
 
-  SELECT * FROM adm_transacciones_log atl;
-  SELECT* FROM adm_precios_log apl;
+  SELECT * FROM  adm_precios_log apl ORDER BY apl.fecha_creacion ASC;
+  SELECT* FROM adm_precios_log apl; /*WHERE apl.id_objeto = 42 AND apl.nombre_tabla = 'producto_precio_esp' ORDER BY apl.fecha_creacion;*/
 /*SENTENCIAS*/
 
+  SELECT * FROM adm_precios_log apl WHERE apl.id_objeto = 54 AND apl.nombre_tabla = 'productos';
 /*APLICAR DESCUENTO A LISTA DE PRODUCTO DE UN CLIENTE*/
 CALL lista_productos_descuento_cliente(56, 2.8, '+');
 CALL restaurar_lista_precios(56);
 CALL lista_productos_descuento_cliente(56, 5.5, '+');
+
+TRUNCATE adm_precios_log;
