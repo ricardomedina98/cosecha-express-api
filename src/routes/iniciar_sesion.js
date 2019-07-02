@@ -27,8 +27,7 @@ module.exports = app => {
                 usuario: result.dataValues  
             }, app.libs.config.SEED_TOKEN, {expiresIn: app.libs.config.CADUCIDAD_TOKEN});
 
-            return res.
-            cookie('token', token, { maxAge: 86400 }).
+            return res.            
             json({
                 OK: true,
                 usuario: result,

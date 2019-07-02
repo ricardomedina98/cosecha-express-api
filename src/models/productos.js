@@ -79,6 +79,11 @@ module.exports = (sequelize, DataType) => {
             sourceKey: 'id_producto'
         });
 
+        Productos.hasMany(models.Precios_Log, {
+            foreignKey: 'id_objeto',
+            sourceKey: 'id_producto'
+        });
+
         Productos.belongsToMany(models.Clientes, {
             as:'productosClientes',
             through: {

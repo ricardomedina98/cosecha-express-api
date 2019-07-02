@@ -7,7 +7,7 @@ module.exports = app => {
         let token = req.cookies.token || req.get('token');
         
     
-        jwt.verify(token, app.libs.config.SEED_TOKEN, (err, decode) => {
+        jwt.verify(token, app.libs.config.SEED_TOKEN, { ignoreExpiration: true},(err, decode) => {
     
             if(err){
                 return res.status(401).json({

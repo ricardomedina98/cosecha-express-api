@@ -318,8 +318,8 @@ module.exports = app => {
             productos: JSON.parse(JSON.stringify(productosNuevos)),
             observacion: req.body.observacion
         }
-
-        let templateHTMLPDF = fs.readFileSync(path.join(process.cwd(), 'pdfs/lista_productos_cliente_pdf.html'), 'utf8');
+        
+        let templateHTMLPDF = fs.readFileSync(path.join(process.cwd(), 'src/pdfs/lista_productos_cliente_pdf.html'), 'utf8');
         let template = handlebars.compile(templateHTMLPDF);
         let finalHtml = template(dataBinding);
         let options = {
@@ -332,7 +332,7 @@ module.exports = app => {
                 bottom: "60px"
             },
             printBackground: true,
-            path: `files/pdfs/lista_precios_${fileNameargSend}.pdf`
+            path: `src/files/pdfs/lista_precios_${fileNameargSend}.pdf`
         }
 
         const browser = await puppeteer.launch({ headless: true });
@@ -419,7 +419,6 @@ module.exports = app => {
 
         res.set('Content-disposition', 'attachment; filename=' + `lista_precios_${fileNameargSend}.xlsx` );
         res.set('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        
         
 		// Write Buffer
         workbook.xlsx.write(res)

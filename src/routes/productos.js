@@ -21,5 +21,7 @@ module.exports = app => {
 
     app.put('/productos/equivalencias/:id', verificarToken, Producto.EquivalenciaProducto);
 
+    app.get('/productos/:id_producto/grafica', Producto.GraficaProducto);
+
     
 }

@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.io = socketIO;
 app.use(cors());
 
-//Local mode add {cwd: 'src'}
+
 consign({cwd: 'src'})
 .include('libs/config.js')
 .then('./database.js')    

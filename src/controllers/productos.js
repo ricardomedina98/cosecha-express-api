@@ -1,4 +1,8 @@
 const faker = require('faker/locale/es_MX');
+const moment = require('moment');
+const _ = require('lodash');
+
+moment.locale('en');
 
 module.exports = app => {
 
@@ -6,6 +10,7 @@ module.exports = app => {
     const Mediciones = app.database.models.Mediciones;
     const Cat_Prod = app.database.models.Categoria_productos;
     const Equivalencias = app.database.models.Equivalencias;
+    const Precios_Log = app.database.models.Precios_Log;
     const sequelize = app.database.sequelize;    
 
 
@@ -161,6 +166,37 @@ module.exports = app => {
             res.status(412).json({
                 OK: false,
                 msg: err
+            });
+        });
+    }
+
+    app.GraficaProducto = (req, res) => {
+        Producto.findAll({
+            where: {
+                id_producto: req.params.id_producto,
+                status: 'A'
+            },
+            include: [{
+                model: Precios_Log,                
+                where: {
+                    nombre_tabla: 'productos',
+                    id_objeto: req.params.id_producto
+                }
+            }],
+            order: [['Precios_Logs','fecha_creacion', 'ASC']]
+        })
+        .then(result => {  
+            let data = [];
+
+            _.forEach(result[0].Precios_Logs, value => {
+                data.push([moment(value.fecha_creacion).format('DD/MM/YYYY-HH:mm'),value.precio_nuevo]);                
+            });
+
+            res.json(data);
+        })
+        .catch(error => {
+            res.status(412).json({
+                msg: error.message
             });
         });
     }
