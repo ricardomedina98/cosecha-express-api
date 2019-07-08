@@ -204,5 +204,26 @@ module.exports = app => {
 
     }
 
+    app.ConsultarUsuarioTotales = (req, res) => {
+
+        Usuario.count({
+            where: {
+                status: 'A'
+            }
+        })
+        .then(count => {
+            res.json({
+                OK: true,
+                Total: count
+            });
+        })
+        .catch(err => {
+            res.json({
+                OK: false,
+                msg: err
+            });
+        });
+    }
+
     return app;
 }

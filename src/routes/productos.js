@@ -23,5 +23,7 @@ module.exports = app => {
 
     app.get('/productos/:id_producto/grafica', Producto.GraficaProducto);
 
+    app.get('/productos/count/totales', Producto.ConsultarProductosTotales);
+
     
 }

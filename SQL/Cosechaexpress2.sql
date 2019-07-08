@@ -136,8 +136,12 @@ SELECT @@SYSTEM_TIME_ZONE, @@TIME_ZONE, NOW();
 
   SELECT * FROM adm_precios_log apl WHERE apl.id_objeto = 54 AND apl.nombre_tabla = 'productos';
 /*APLICAR DESCUENTO A LISTA DE PRODUCTO DE UN CLIENTE*/
-CALL lista_productos_descuento_cliente(56, 2.8, '+');
+
+
+CALL lista_productos_descuento_cliente(74, 10, '+');
 CALL restaurar_lista_precios(56);
 CALL lista_productos_descuento_cliente(56, 5.5, '+');
+
+
 
 TRUNCATE adm_precios_log;

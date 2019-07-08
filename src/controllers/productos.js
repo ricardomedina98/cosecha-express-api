@@ -291,5 +291,26 @@ module.exports = app => {
         });       
     }
 
+    app.ConsultarProductosTotales = (req, res) => {
+
+        Producto.count({
+            where: {
+                status: 'A'
+            }
+        })
+        .then(count => {
+            res.json({
+                OK: true,
+                Total: count
+            });
+        })
+        .catch(err => {
+            res.json({
+                OK: false,
+                msg: err
+            });
+        });
+
+    }
     return app;
 }

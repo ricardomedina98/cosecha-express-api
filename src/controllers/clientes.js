@@ -15,9 +15,7 @@ module.exports = app => {
     const Productos = app.database.models.Productos;
     const Productos_Clientes = app.database.models.Productos_Clientes;
     const Mediciones = app.database.models.Mediciones;
-    const sequelize = app.database.sequelize;   
-    
-    moment.locale('es');
+    const sequelize = app.database.sequelize;       
 
     app.ConsultarClientes = (req, res) => {
 
@@ -271,7 +269,9 @@ module.exports = app => {
     }
 
     app.enviarCorreoCliente = async (req, res) => {  
-     
+        
+        moment.locale('es');
+    
         const productos = await Cliente.findByPk(req.params.id_cliente,{
             where: {                
                 status: 'A'
@@ -324,8 +324,7 @@ module.exports = app => {
         let finalHtml = template(dataBinding);
         let options = {
             format: 'A4',
-            headerTemplate: "<p></p>",
-            footerTemplate: `<div style="font-size: 10px; margin-left: 30px;">Cosecha Express ${moment().format('YYYY')}</div> <span>-</span> <div style="font-size: 10px; float: right;">Desarrollado por Grupo TLK</div>`,
+            footerTemplate: `<div style="font-size: 10px; margin-left: 30px;">Cosecha Express ${moment().format('YYYY')}</div> <span></span> <div style="font-size: 10px; float: right;"> - Desarrollado por Grupo TLK</div>`,
             displayHeaderFooter: true,
             margin: {
                 top: "20px",
@@ -453,7 +452,7 @@ module.exports = app => {
 
         sequelize.query('CALL restaurar_lista_precios(:id_cliente)', {
             replacements: { 
-                id_cliente: req.params.id_cliente
+                id_cliente: Number(req.params.id_cliente)
             }
         }).then( response => {
             if(response[TextRow] == 'OK'){
@@ -549,6 +548,26 @@ module.exports = app => {
 
     }
 
+    app.ConsultarClienteTotales = (req, res) => {
+
+        Cliente.count({
+            where: {
+                status: 'A'
+            }
+        })
+        .then(count => {
+            res.json({
+                OK: true,
+                Total: count
+            });
+        })
+        .catch(err => {
+            res.json({
+                OK: false,
+                msg: err
+            });
+        });
+    }
 
     return app;
 }

@@ -92,8 +92,7 @@ CREATE TABLE categorias_productos (
 ENGINE = INNODB,
 AUTO_INCREMENT = 24,
 AVG_ROW_LENGTH = 780,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 --
 -- Create index `un_categoria` on table `categorias_productos`
@@ -112,8 +111,7 @@ CREATE TABLE mediciones (
 ENGINE = INNODB,
 AUTO_INCREMENT = 5,
 AVG_ROW_LENGTH = 3276,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 --
 -- Create table `productos`
@@ -137,8 +135,7 @@ CREATE TABLE productos (
 ENGINE = INNODB,
 AUTO_INCREMENT = 347,
 AVG_ROW_LENGTH = 198,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 --
 -- Create foreign key
@@ -174,8 +171,7 @@ CREATE TABLE equivalencias (
 ENGINE = INNODB,
 AUTO_INCREMENT = 298,
 AVG_ROW_LENGTH = 61,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 --
 -- Create index `un_id_producto` on table `equivalencias`
@@ -225,8 +221,7 @@ CREATE TABLE clientes (
 ENGINE = INNODB,
 AUTO_INCREMENT = 76,
 AVG_ROW_LENGTH = 1092,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 --
 -- Create table `producto_precio_esp`
@@ -242,8 +237,7 @@ CREATE TABLE producto_precio_esp (
 ENGINE = INNODB,
 AUTO_INCREMENT = 140,
 AVG_ROW_LENGTH = 165,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 --
 -- Create foreign key
@@ -405,8 +399,7 @@ CREATE TABLE usuarios (
 ENGINE = INNODB,
 AUTO_INCREMENT = 57,
 AVG_ROW_LENGTH = 372,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 --
 -- Create index `nombre_usuario_un` on table `usuarios`
@@ -430,8 +423,7 @@ CREATE TABLE adm_transacciones_log (
 ENGINE = INNODB,
 AUTO_INCREMENT = 179,
 AVG_ROW_LENGTH = 115,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 --
 -- Create table `adm_precios_log`
@@ -449,8 +441,7 @@ CREATE TABLE adm_precios_log (
 ENGINE = INNODB,
 AUTO_INCREMENT = 26,
 AVG_ROW_LENGTH = 682,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_0900_ai_ci;
+CHARACTER SET utf8mb4;
 
 -- 
 -- Dumping data for table mediciones

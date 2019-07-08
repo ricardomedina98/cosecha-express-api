@@ -40,4 +40,7 @@ module.exports = app => {
     app.post('/clientes/:id_cliente/enviar_correo', [verificarToken, verificarAdmin_Role] , Cliente.enviarCorreoCliente);
 
     app.get('/clientes/:id_cliente/descargar_excel', [verificarToken, verificarAdmin_Role] , Cliente.descargarExcel);
+
+    app.get('/clientes/count/totales', Cliente.ConsultarClienteTotales);
+    
 }

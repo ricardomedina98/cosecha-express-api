@@ -3,7 +3,7 @@ module.exports = {
     username: 'root',
     password: '030498',    
     options:{        
-        host: '127.0.0.1',
+        host: '192.168.137.198',
         dialect: 'mysql',
         port: '3306',
         dialectOptions: {
@@ -19,9 +19,9 @@ module.exports = {
     SEED_TOKEN: process.env.SEED_TOKEN || 'cosechaexpress2019',
     CADUCIDAD_TOKEN: process.env.CADUCIDAD_TOKEN || '48h',
     correoOpciones: {
-        correo_electronico: 'lacosechaexpress.notificaciones@gmail.com',
-        contrasena_correo: 'lacosechaexpress2019',
-        servicio: 'gmail'
+        correo_electronico: 'guerrero0124@outlook.com',
+        contrasena_correo: 'Ragnarok1010',
+        servicio: 'Hotmail'
     }
     
 
