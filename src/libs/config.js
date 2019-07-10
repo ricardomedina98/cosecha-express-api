@@ -1,9 +1,9 @@
 module.exports = {
     database: 'cosechaexpress2',
     username: 'root',
-    password: '030498',    
+    password: 'hugo1010',    
     options:{        
-        host: '192.168.137.198',
+        host: 'localhost',
         dialect: 'mysql',
         port: '3306',
         dialectOptions: {
@@ -23,8 +23,4 @@ module.exports = {
         contrasena_correo: 'Ragnarok1010',
         servicio: 'Hotmail'
     }
-    
-
-
-    
 };

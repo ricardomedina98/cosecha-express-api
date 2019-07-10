@@ -33,11 +33,11 @@ module.exports = app => {
             nombre_empleado: body.nombre_empleado,
             nombre_usuario: body.nombre_usuario,
             contrasena: bcrypt.hashSync(body.contrasena, 10),
-            role: body.role
+            id_role: body.id_role
         });
 
         Usuario.create(usuario.dataValues, {
-            fields: ['nombre_empleado', 'nombre_usuario', 'contrasena', 'role']
+            fields: ['nombre_empleado', 'nombre_usuario', 'contrasena', 'id_role']
         })
         .then(result => {
             delete result.dataValues.contrasena;
@@ -57,7 +57,7 @@ module.exports = app => {
     app.ActualizarUsuario = (req, res) => {
         let id = req.params.id;
         let body = req.body;   
-        let fields = ['nombre_empleado', 'nombre_usuario', 'role', 'status']     
+        let fields = ['nombre_empleado', 'nombre_usuario', 'id_role', 'status']     
 
         let usuario = new Usuario();        
 
@@ -66,7 +66,7 @@ module.exports = app => {
                 nombre_empleado: body.nombre_empleado,
                 nombre_usuario: body.nombre_usuario,
                 contrasena: bcrypt.hashSync(body.contrasena, 10),
-                role: body.role,
+                id_role: body.role,
                 status: 'A'
             });
 
@@ -75,7 +75,7 @@ module.exports = app => {
             usuario = new Usuario({
                 nombre_empleado: body.nombre_empleado,
                 nombre_usuario: body.nombre_usuario,                
-                role: body.role,
+                id_role: body.id_role,
                 status: 'A'
             });
         }

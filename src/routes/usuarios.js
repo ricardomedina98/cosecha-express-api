@@ -2,11 +2,11 @@
 
 module.exports = app => {
     
-    const { verificarToken, verificarAdmin_Role } = app.middlewares.auth;
+    const { verificarToken } = app.middlewares.auth;
     const Usuario = app.controllers.usuarios;
     const { UniqueUsuarioInsert, UniqueUsuarioUpdate } = app.middlewares.usuario;
 
-    app.get('/usuario', [verificarToken, verificarAdmin_Role], Usuario.ObtenerUsuarios );
+    app.get('/usuario', [verificarToken], Usuario.ObtenerUsuarios );
 
     app.post('/usuario', [verificarToken, UniqueUsuarioInsert], Usuario.CrearUsuario);
 
