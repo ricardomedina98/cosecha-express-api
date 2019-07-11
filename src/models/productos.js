@@ -85,7 +85,7 @@ module.exports = (sequelize, DataType) => {
         });
 
         Productos.belongsToMany(models.Clientes, {
-            as:'productosClientes',
+            as:'ProductosClientes',
             through: {
                 model: models.Productos_Clientes
             }, 

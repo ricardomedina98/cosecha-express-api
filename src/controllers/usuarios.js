@@ -4,13 +4,19 @@ const faker = require('faker/locale/es_MX');
 module.exports = app => {
 
     const Usuario = app.database.models.Usuarios;
+    const Roles = app.database.models.Roles;
+    
 
     app.ObtenerUsuarios = (req, res) => {
 
         Usuario.findAll({
             where: {
                 status: 'A'
-            }
+            },
+            include: [{
+                model: Roles,
+                required: true
+            }]
         })
         .then(usuarios => {
             res.json({

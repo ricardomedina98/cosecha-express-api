@@ -8,23 +8,11 @@ module.exports = (sequelize, DataType) => {
         },
         nombre_empleado: {
             type: DataType.STRING,
-            allowNull: false,            
-            validate: {
-                notNull: {
-                    msg: 'El nombre es necesario'
-                },
-                notEmpty: true
-            }     
+            allowNull: false     
         },
         nombre_usuario: {
             type: DataType.STRING,
-            allowNull: false,
-            validate: {
-                notNull: {
-                    msg: 'El nombre de usuario es necesario'
-                },
-                notEmpty: true
-            }         
+            allowNull: false        
         },        
         contrasena: {
             type: DataType.TEXT,                  
@@ -69,6 +57,15 @@ module.exports = (sequelize, DataType) => {
         },
         timestamps: false
     });
+
+    
+
+    Usuarios.associate = (models) => {        
+        Usuarios.belongsTo(models.Roles, {
+            foreignKey: 'id_role',
+            sourceKey: 'id_role'
+        });
+    }
     
 
     return Usuarios;

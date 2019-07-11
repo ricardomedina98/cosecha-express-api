@@ -11,8 +11,23 @@ module.exports = (sequelize, DataType) => {
             allowNull: false     
         }
     },{
-        tableName: 'roles'
+        tableName: 'roles',
+        timestamps: false
     });
+
+    Roles.associate = (models) => {
+
+        Roles.belongsToMany(models.Modulos, {       
+            as: 'RolesModulos',
+            through: {
+                model: models.Roles_Modulos
+            }, 
+            foreignKey: 'id_role',
+            sourceKey: 'id_role'
+        });
+    }
+
+    
     
 
     return Roles;
