@@ -57,6 +57,3 @@ create table permisos_nivel_2(
 	constraint pk_id_permiso_nivel_2 primary key (id_permiso_nivel_2),
     constraint fk_id_permiso_nivel_1_permisos_nivel_2 foreign key (id_permiso_nivel_1) references permisos_nivel_1(id_permiso_nivel_1)
 );
-
-
-

@@ -7,13 +7,7 @@ module.exports = (sequelize, DataType) => {
         },
         nombre_categoria:{
             type: DataType.STRING,
-            allowNull: false,
-            validate:{
-                notNull:{
-                    msg: 'El nombre de la categoria es necesario'
-                },
-                notEmpty: true
-            }
+            allowNull: false
         }
     }, {
         tableName: 'categorias_productos',
